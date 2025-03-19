@@ -1,3 +1,11 @@
-<main>
-  <router-outlet></router-outlet>
-</main>
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <app-sidnav></app-sidnav>
+  </mat-drawer>
+  <div class="sidenav-content">
+    <button type="button" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
