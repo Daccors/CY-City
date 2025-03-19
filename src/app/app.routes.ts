@@ -10,5 +10,3 @@ export const routes: Routes = [
     {path: 'se_connecter', component: SignInComponent},
     { path: '**', redirectTo: '' },
 ];
-
-
