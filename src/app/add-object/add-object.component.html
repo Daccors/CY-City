@@ -1,5 +1,41 @@
 <div class="body">
     <div class="navigation">
-        <a routerLink="/" routerLinkActive = "active"><button class="Add"><mat-icon>add</mat-icon>Ajouter un objet</button></a>
+        <button routerLink="/" routerLinkActive ="active" class="Add"><mat-icon>add</mat-icon>Ajouter un objet</button>
+    </div>
+
+    <div class="object-list">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="num">
+              <th mat-header-cell *matHeaderCellDef><B> ID </B></th>
+              <td mat-cell *matCellDef="let element"> {{element.num}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef><B> Name </B></th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef><B> Type </ B></th>
+              <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="button">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-fab class="delete-button" (click)="DeleteDialog(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-fab class="view-stat">
+                        <mat-icon>assessment</mat-icon>
+                    </button>
+                    <button mat-fab class="change-state">
+                        <mat-icon>build</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
     </div>
 </div>

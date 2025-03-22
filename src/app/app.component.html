@@ -1,7 +1,8 @@
 <mat-drawer-container class="container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <app-sidnav></app-sidnav>
+  <mat-drawer #drawer class="sidenav" [mode]="mode">
+    <app-sidnav [isMobile]="isMobile" (AutoClose)="drawer.toggle()"></app-sidnav>
   </mat-drawer>
+  
   <div class="sidenav-content">
     <button type="button" mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>

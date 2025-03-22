@@ -1,11 +1,16 @@
 <div class="sidnav-content">
     <div class="top">
         <img src="placeholder.png" alt="Website icon" width="100%" height="150px">
-        <a routerLink="/" routerLinkActive = "active"><button><mat-icon>home</mat-icon>Acceuil</button></a>
-        <a routerLink="/add_object" routerLinkActive = "active"><button><mat-icon>settings</mat-icon>Page Test objet</button></a>
+        <button mat-raised-button routerLink="/" routerLinkActive="active" class="home-button"
+            (click)="onButtonClicked()"><mat-icon>home</mat-icon>Acceuil</button>
+        <button mat-raised-button routerLink="/add_object" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>settings</mat-icon>Page
+            Test objet</button>
     </div>
     <div class="bottom">
-        <a routerLink="/se_connecter" routerLinkActive="active"><button class = "sign_in_button"><mat-icon>account_circle</mat-icon>Se connecter</button></a>
-        <a routerLink="/créer_un_compte" routerLinkActive = "active"><button class = "sign_up_button"><mat-icon>person</mat-icon>Créer un compte</button></a>
+        <button mat-raised-button routerLink="/se_connecter" routerLinkActive="active" class="sign_in_button"
+            (click)="onButtonClicked()"><mat-icon>account_circle</mat-icon>Se connecter</button>
+        <button mat-raised-button routerLink="/créer_un_compte" routerLinkActive="active" class="sign_up_button"
+            (click)="onButtonClicked()"><mat-icon>person</mat-icon>Créer un compte</button>
     </div>
 </div>

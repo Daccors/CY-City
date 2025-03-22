@@ -1,0 +1,105 @@
+.delete-button mat-icon, .change-state mat-icon, .view-stat mat-icon{
+    vertical-align: middle;
+    color: white;
+}
+.Add mat-icon{
+    vertical-align: middle;
+    color: white;
+    margin-right: 10px;
+}
+
+.Add {
+    align-items: center;
+    background-color: #3f7abd;
+    border: 2px solid #422800;
+    width: fit-content;
+    min-width: max-content;
+    border-radius: 30px;
+    color: #fafafa;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    transition: transform 0.3 ease-in-out;
+}
+
+/* Mat-Fab buttons*/
+.view-stat, .change-state {
+    background-color: #3f7abd;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.delete-button {
+    background-color: red;
+    cursor: pointer;
+    transition: transform 0.3 ease-in-out;
+}
+
+/*Animation on mouse over*/
+.delete-button:hover, .view-stat:hover, .change-state:hover, .Add:hover {
+    transform: translateY(-2px);
+}
+
+div.navigation{
+    display : flex;
+    padding: 10px;
+    gap : 10px;
+    background-color: rgb(107, 80, 204);
+    border-radius: 30px;
+    align-items:center;
+    justify-content:right;  
+} 
+div.body {
+    padding: 15px;
+}
+div.object-list {
+    margin-top: 10px;
+    background-color: rgb(107, 80, 204);
+    padding: 10px;
+    border-radius: 30px;
+}
+table {
+    width: 100%;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.mat-mdc-header-cell {
+    text-align: center;
+    background-color: #3f7abd !important;
+    color: white;
+}
+
+.mat-mdc-cell:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-end;
+    gap: 25px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    padding: 5px;
+    cursor: pointer;
+    align-items: center;
+    text-align: center;
+  }
+  
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+.row-is-clicked {
+    font-weight: bold;
+}

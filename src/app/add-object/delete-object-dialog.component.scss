@@ -1,0 +1,50 @@
+* :not(mat-icon){
+    font-family: 'Lato', sans-serif !important;
+}
+
+@keyframes cancel_anim {
+    from {
+        background-color: transparent;
+        color: #3f7abd;
+    }
+
+    to {
+        background-color: #3f7abd;
+        color: white;
+    }
+}
+
+@keyframes confirm_anim {
+    from {
+        background-color: transparent;
+        color: red;
+    }
+    to {
+        background-color: red;
+        color: white;
+    }
+}
+
+.cancel-button {
+    color:#3f7abd;
+    border: 2px solid #3f7abd;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.confirm-button {
+    color: red;
+    border: 2px solid red;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.confirm-button:hover {
+    animation: confirm_anim;
+    background-color: red;
+    color: white;
+}
+
+.cancel-button:hover {
+    animation: cancel_anim 0.2;
+    background-color:#3f7abd;
+    color: white;
+}
