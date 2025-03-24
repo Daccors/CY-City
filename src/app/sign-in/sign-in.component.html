@@ -1,1 +1,36 @@
-<p>sign-in works!</p>
+<div class="body">
+    <mat-card>
+        <mat-card-title>
+            Connexion
+        </mat-card-title>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label> Adresse Mail </mat-label>
+                <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                    placeholder="Ex. pat@example.com" [(ngModel)]="LoginObjt.mail">
+                @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                <mat-error>Veuillez entrer une adresse e-mail valide.</mat-error>
+                }
+                @if (emailFormControl.hasError('required')) {
+                <mat-error>L'adresse e-mail est <strong>obligatoire</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label> Mot de passe </mat-label>
+                <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher" [(ngModel)]="LoginObjt.password">
+                @if (passwordFormControl.hasError('required')) {
+                    <mat-error> Le mot de passe est obligatoire </mat-error>
+                }
+            </mat-form-field>
+            <div>
+                <mat-checkbox (change)="checkChanged($event)"> Se souvenir de moi </mat-checkbox>
+            </div>
+            <div class="button">
+                <button mat-flat-button (click)="onLogin()" > Se connecter </button>
+            </div>
+        </mat-card-content>
+        <mat-card-footer>
+            <a routerLink="/" routerLinkActive="active">Mot de passe oublié ?</a>
+        </mat-card-footer>
+    </mat-card>
+</div>

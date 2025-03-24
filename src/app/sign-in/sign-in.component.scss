@@ -1,3 +1,45 @@
 * {
     color: black;
 }
+
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    min-width: fit-content;
+}
+
+mat-card {
+    gap: 15px;
+    border-radius: 30px;
+    mat-card-title {
+        text-align: center;
+        color: white !important;
+        background-color: rgb(107, 80, 204);
+        border-radius: 30px;
+        font-size: 50px;
+        line-height: 70px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    mat-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    mat-card-footer {
+        color: grey;
+        text-decoration: underline;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+}
+
+button {
+    background-color: #3f7abd !important;
+    font-size: 15px;
+}

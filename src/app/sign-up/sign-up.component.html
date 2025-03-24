@@ -1,1 +1,69 @@
-<p>sign-up works!</p>
+<div class="body">
+    <h1> Inscription </h1>
+    <mat-card>
+        <mat-card-content>
+            <div class="column1">
+                <label for="fileInput" class="profile-picture">
+                    <img [src]="imageSrc || '../../../public/placeholder.png'" alt="Profile Picture" />
+                </label>
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" />
+            </div>
+            <div class="column2">
+                <h2> Création du compte* </h2>
+                <mat-form-field>
+                    <mat-label> Adresse email </mat-label>
+                    <input matInput placeholder="Ex. pat@example.com" type="email" [formControl]="email"
+                        (blur)="updateErrorMessage()" required />
+                    @if (email.invalid) {
+                    <mat-error>{{errorMessage()}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Pseudonyme </mat-label>
+                    <input matInput type="text" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Mot de passe </mat-label>
+                    <input matInput type="password" [formControl]="password" (blur)="updateErrorMessagePassword()"
+                        required />
+                    @if(password.invalid) {
+                    <mat-error>{{errorMessagePassword()}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Confirmer votre mot de passe </mat-label>
+                    <input matInput type="password" [formControl]="confirmPassword"
+                        (blur)="updateErrorMessageConfirmPassword()" required />
+                    @if(confirmPassword.invalid){
+                    <mat-error>{{errorMessageConfirmPassword()}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-divider></mat-divider>
+                <h2> Informations personnelles </h2>
+                <mat-form-field>
+                    <mat-label> Nom </mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Prénom </mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Date de naissance </mat-label>
+                    <input matInput type="date">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label> Sexe </mat-label>
+                    <mat-select [(value)]="sexe">
+                        <mat-option value="H"> Homme </mat-option>
+                        <mat-option value="F"> Femme </mat-option>
+                        <mat-option value="X"> Autre </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div class="signIn">
+        <button mat-stroked-button> M'inscrire </button>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidnav',
@@ -14,6 +15,20 @@ import { CommonModule } from '@angular/common';
 export class SidnavComponent {
   @Input() isMobile = false;
   @Output() AutoClose = new EventEmitter<boolean>;
+
+
+  userRole: String | null = null;
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.getUserRoleObservable().subscribe(role => {
+      this.userRole = role;
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 
   onButtonClicked(): void {
     if(this.isMobile){

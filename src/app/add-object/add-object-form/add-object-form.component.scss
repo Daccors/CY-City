@@ -1,0 +1,79 @@
+@import '../../styles/mixins';
+@import '../../styles/colors.scss';
+
+.body {
+    padding: 15px;
+    gap: 15px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.FirstStep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    padding-top: 10px;
+    gap: 14px !important;
+}
+
+.IPFORM {
+    gap: 10px !important;
+    display: flex;
+    flex-direction: row;
+}
+
+mat-stepper {
+    background-color: transparent;
+}
+
+.local {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-top: 10px;
+    gap: 14px !important;
+}
+
+h1 {
+    @include page-header;
+    text-align: center;
+}
+
+table {
+    @include table;
+}   
+
+.selected {
+    font-weight: bold;
+    color: white;
+    background-color: grey;
+}
+
+.Add {
+    @include action-button-style;
+}
+
+.addLocalization {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    vertical-align: middle;
+    justify-content: flex-end;
+}
+
+.actionButton {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: flex-end;
+    
+    :first-child{
+        @include action-button-style(red, 0);
+    }
+    ::after{
+        @include action-button-style;
+    }
+}

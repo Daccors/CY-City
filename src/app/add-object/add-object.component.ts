@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -10,6 +12,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 export interface Object {
   name: string;
@@ -31,6 +34,10 @@ const ELEMENT_DATA: Object[] = [
     MatIconModule,
     MatTableModule,
     MatButtonModule,
+    MatTooltipModule,
+    RouterLink,
+    RouterLinkActive,
+    MatCardModule
   ],
   templateUrl: './add-object.component.html',
   styleUrl: './add-object.component.scss'

@@ -1,4 +1,7 @@
-.mat-mdc-raised-button mat-icon{
+@import '../styles/mixins';
+@import '../styles/colors.scss';
+
+.mat-mdc-raised-button mat-icon {
   font-size: 20px;
   line-height: 1;
   vertical-align: middle;
@@ -7,39 +10,22 @@
 }
 
 .sidnav-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    background-color: rgb(107, 80, 204);
-    padding: 4px;
-    overflow: hidden;
-  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $primary-color;
+  padding: 4px;
+  overflow: hidden;
+}
 
 .mat-mdc-raised-button {
-    vertical-align: middle;
-    background-color: #3f7abd !important;
-    border: 2px solid #422800;
-    width: 100%;
-    min-width: max-content;
-    border-radius: 30px;
-    color: hsl(0, 0%, 98%) !important;
-    cursor: pointer;
-    display:inline-flex;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 0 18px;
-    line-height: 50px;
-    text-align: left;
-    transition: transform 0.1s ease-in-out;
-    justify-content: flex-start;
-    gap: 5px;
-    display: flex;
-  }
+  @include action-button-style;
+}
 
- button:hover {
-      transform: translateY(-2px);
-    }
+button:hover {
+  transform: translateY(-2px);
+}
 
 .sidnav-content div.top {
   display: flex;
@@ -48,10 +34,15 @@
   justify-content: flex-start;
   gap: 10px;
 }
+
 .sidnav-content div.bottom {
   display: flex;
   flex-direction: column;
   justify-items: center;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.logout {
+  @include action-button-style(rgb(255, 0, 0))
 }

@@ -1,0 +1,98 @@
+@import 'colors';
+
+@mixin action-button-style($BC : $action-button-color, $filled : 1) {
+    vertical-align: middle;
+    //border: 2px solid #422800;
+    width: auto;
+    min-width: max-content;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: left;
+    transition: transform 0.1s ease-in-out;
+    justify-content: flex-start;
+    gap: 5px;
+    text-decoration: solid;
+
+    @if($filled == 1){
+        color: white !important;
+        background-color: $BC !important;
+    }
+    @else{
+        color: $BC !important;
+        background-color: transparent;
+        border: 2px solid $BC;
+    }
+}
+
+@mixin page-header($flex : center) {
+    color: white;
+    background-color: $primary-color;
+    border-radius: 30px;
+    font-size: 50px;
+    line-height: 73px;
+    height: 73px;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: $flex;
+    padding: 15px;
+
+    mat-icon {
+        flex: none;
+    }
+}
+
+@mixin icon-in-button-fab {
+    font-size: 22px;
+    line-height: 1;
+    vertical-align: middle;
+    align-items: center;
+    color: white;
+}
+
+@mixin card {
+    border-radius: 30px !important;
+}
+
+@mixin body {
+    padding: 15px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin table {
+    width: 100%;
+    border-radius: 30px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+
+
+    .mat-mdc-header-cell {
+        text-align: center;
+        background-color: $action-button-color !important;
+        color: white;
+    }
+
+    .mat-mdc-row .mat-mdc-cell {
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        padding: 5px;
+        cursor: pointer;
+        align-items: center;
+        text-align: center;
+    }
+
+    .mat-mdc-row:hover .mat-mdc-cell {
+        border-color: currentColor;
+    }
+
+    .row-is-clicked {
+        font-weight: bold;
+    }
+}

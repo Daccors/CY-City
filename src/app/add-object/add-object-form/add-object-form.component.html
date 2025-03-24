@@ -1,0 +1,79 @@
+<div class="body">
+    <h1> Ajout d'un nouvel objet au réseau </h1>
+    <mat-card>
+        <mat-card-content>
+            <mat-stepper orientation="vertical" #stepper linear="true">
+                <mat-step label="Informations primaires" class="FirstStep">
+                    <div class="NAME">
+                        <mat-form-field>
+                            <mat-label> Nom </mat-label>
+                            <input matInput>
+                            <mat-hint> nom sur le réseau </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="IPFORM">
+                        <mat-form-field>
+                            <mat-label> Adresse IP</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select>
+                                <mat-option value="IPV4">IPV4</mat-option>
+                                <mat-option value="IPV6">IPV6</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="TYPE">
+                        <mat-form-field>
+                            <mat-label> Type* </mat-label>
+                            <mat-select [(value)]="type">
+                                <mat-option value="Lamp"> Lampadaire/éclairage </mat-option>
+                                <mat-option value="Trash"> Poubelle </mat-option>
+                                <mat-option value="delivery_drone"> Drone de livraison </mat-option>
+                                <mat-option value="public_display"> Écran d'affichage </mat-option>
+                                <mat-option value="parking_lot"> Capteur de stationnement </mat-option>
+                                <mat-option value="other"> Autre </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-step>
+                <mat-step label="Emplacement">
+                    <div class="local">
+                        <p> Emplacement séléctionner : <B>{{ displayRow }}</B> </p>
+                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef><B> ID </B></th>
+                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="long">
+                                <th mat-header-cell *matHeaderCellDef><B> Longitude </B></th>
+                                <td mat-cell *matCellDef="let element"> {{element.long}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="lat">
+                                <th mat-header-cell *matHeaderCellDef><B> Latitude </B></th>
+                                <td mat-cell *matCellDef="let element"> {{element.lat}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
+                                [class.selected]="selectedRow === row"></tr>
+                        </table>
+                    </div>
+                    <div class="addLocalization">
+                        <p> L'emplacement n'est pas dans la liste ? </p>
+                        <button mat-flat-button class="Add"><mat-icon>add</mat-icon> Ajouter le nouvel
+                            emplacement</button>
+                    </div>
+                </mat-step>
+                <mat-step label="Informations Complémentaires">
+                    <p> PLACEHOLDER </p>
+                </mat-step>
+            </mat-stepper>
+        </mat-card-content>
+    </mat-card>
+    <div class="actionButton">
+        <button mat-flat-button> Annuler </button>
+        <button mat-flat-button class="Add"> Ajouter </button>
+    </div>
+</div>
