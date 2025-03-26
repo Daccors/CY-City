@@ -42,7 +42,7 @@ h1 {
 
 table {
     @include table;
-}   
+}
 
 .selected {
     font-weight: bold;
@@ -69,11 +69,18 @@ table {
     flex-direction: row;
     gap: 15px;
     justify-content: flex-end;
-    
-    :first-child{
+
+    :first-child {
         @include action-button-style(red, 0);
     }
-    ::after{
+
+    ::after {
         @include action-button-style;
     }
+}
+
+.description{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }

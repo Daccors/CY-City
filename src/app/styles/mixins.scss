@@ -8,20 +8,20 @@
     border-radius: 30px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0 18px;
-    line-height: 50px;
     text-align: left;
     transition: transform 0.1s ease-in-out;
     justify-content: flex-start;
-    gap: 5px;
+    gap: 2px;
     text-decoration: solid;
 
-    @if($filled == 1){
+    @if($filled ==1) {
         color: white !important;
         background-color: $BC !important;
     }
-    @else{
+
+    @else {
         color: $BC !important;
         background-color: transparent;
         border: 2px solid $BC;

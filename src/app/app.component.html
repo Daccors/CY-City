@@ -1,12 +1,15 @@
 <mat-drawer-container class="container" autosize>
-  <mat-drawer #drawer class="sidenav" [mode]="mode">
+  <mat-drawer #drawer class="sidenav" [mode]="mode" opened>
     <app-sidnav [isMobile]="isMobile" (AutoClose)="drawer.toggle()"></app-sidnav>
   </mat-drawer>
-  
   <div class="sidenav-content">
-    <button type="button" mat-icon-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    @if (isMobile) {
+    <div class="sidenavButton">
+      <button type="button" mat-fab (click)="drawer.toggle()" class="drawerButton">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    }
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>
