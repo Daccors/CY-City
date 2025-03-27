@@ -9,7 +9,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatInputModule } from '@angular/material/input';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,6 +25,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    MatGridListModule
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
