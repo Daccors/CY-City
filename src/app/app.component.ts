@@ -1,11 +1,12 @@
-import { Component, OnInit, viewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { SidnavComponent } from "./sidnav/sidnav.component";
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DeviceDetectorService } from './services/device-detector.service';
 import { AuthService } from './services/auth.service';
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -17,12 +18,17 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'CY City';
-  mode: MatDrawerMode = "over";
+  pageTitle = "";
 
+  mode: MatDrawerMode = "over";
   deviceType: string = '';
   isMobile: boolean = false;
 
-  constructor(private deviceDetectorService: DeviceDetectorService, private authService: AuthService) { }
+  constructor(private deviceDetectorService: DeviceDetectorService, private authService: AuthService, public router: Router) {
+    window.document.addEventListener("click", () =>{
+      this.pageTitle = window.document.title;
+    })
+  }
   userRole: String | null = null;
 
   ngOnInit(): void {

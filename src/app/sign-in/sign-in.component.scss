@@ -1,6 +1,5 @@
-* {
-    color: black;
-}
+@import '../styles/mixins';
+@import '../styles/colors';
 
 .body {
     display: flex;
@@ -8,6 +7,7 @@
     align-items: center;
     width: auto;
     min-width: fit-content;
+    @include body;
 }
 
 mat-card {
@@ -16,7 +16,7 @@ mat-card {
     mat-card-title {
         text-align: center;
         color: white !important;
-        background-color: rgb(107, 80, 204);
+        background-color: $primary-color;
         border-radius: 30px;
         font-size: 50px;
         line-height: 70px;
@@ -40,6 +40,6 @@ mat-card {
 }
 
 button {
-    background-color: #3f7abd !important;
+    @include action-button-style;
     font-size: 15px;
 }

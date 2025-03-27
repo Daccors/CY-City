@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, HostListener } from '@angular/core';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   MAT_DIALOG_DATA,
@@ -13,6 +13,13 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import {
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
 
 export interface Object {
   name: string;
@@ -29,6 +36,24 @@ const ELEMENT_DATA: Object[] = [
 ];
 
 @Component({
+  selector: 'snack-bar-annotated-component-example-snack',
+  template: '<span class= "example-pizza-party" matSnackBarLabel>Pizza party!!!</span>',
+  styles: `
+    :host {
+      display: flex;
+    }
+
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `,
+  imports: [MatButtonModule, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+})
+export class PizzaPartyAnnotatedComponent {
+  snackBarRef = inject(MatSnackBarRef);
+}
+
+@Component({
   selector: 'app-add-object',
   imports: [
     MatIconModule,
@@ -43,21 +68,30 @@ const ELEMENT_DATA: Object[] = [
   styleUrl: './add-object.component.scss'
 })
 export class AddObjectComponent {
+  private _snackBar = inject(MatSnackBar);
   readonly dialog = inject(MatDialog);
   num = 0;
 
   displayedColumns: string[] = ['num', 'name', 'type', 'button'];
   dataSource = ELEMENT_DATA;
 
-  DeleteDialog(element : Object) {
+  durationInSeconds = 5;
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(PizzaPartyAnnotatedComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
+  DeleteDialog(element: Object) {
     console.log("has been clicked", element);
     this.openDialog(element);
   }
-  openDialog(element : Object): void {
+  openDialog(element: Object): void {
     const dialogRef = this.dialog.open(DeleteObjectDialogComponent, {
       data: {
-        num: element.num, 
-        name : element.name,
+        num: element.num,
+        name: element.name,
         type: element.type
       },
     });

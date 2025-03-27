@@ -1,23 +1,95 @@
+@import '../styles/mixins';
+@import '../styles/colors';
+
 .desktop {
+  mat-divider {
+    margin-bottom: 10px;
+  }
+
+  .banner {
+    width: 100%;
+    height: 20%
+  }
+
   .body {
     padding: 15px;
   }
 
   .home-container {
-    max-width: 1200px;
+    width: 100;
     margin: 0 auto;
     padding: 20px;
     color: #fff;
     text-align: center;
   }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
+  .subContent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+
+    mat-card {
+      display: flex;
+      width: 100%;
+
+      mat-card-title {
+        color: black;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .pinBoard {
+      mat-card {
+        width: 100%;
+        height: 100%;
+        background-color: rgb($primary-color, 0.2);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        .content {
+          color: white;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          transform: scale(2);
+          z-index: 1;
+        }
+      }
+
+
+      mat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+    }
   }
 
-  .home-container {
-    color: #000;
+  .glass-effect::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 30%, $primary-color 60%);
+    opacity: 0.3;
+    transform: rotate(0deg);
+    pointer-events: none;
+  }
+
+  h1 {
+    background-color: $primary-color;
+    text-align: center;
+    color: white;
+
   }
 
   .features {
@@ -26,6 +98,7 @@
     flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 60px;
+
   }
 
   .feature-card {
@@ -34,6 +107,7 @@
     padding: 25px;
     flex: 1;
     min-width: 250px;
+    min-height: 300px;
     transition: transform 0.3s, box-shadow 0.3s;
   }
 

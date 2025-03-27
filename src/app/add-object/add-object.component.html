@@ -37,6 +37,9 @@
                         <button mat-fab class="change-state" matTooltip="Modifier l'objet">
                             <mat-icon>build</mat-icon>
                         </button>
+                        <button mat-fab class="change-state" matTooltip="Ajouter à vos favoris" (click)="openSnackBar()">
+                            <mat-icon>favorite_border</mat-icon>
+                        </button>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
