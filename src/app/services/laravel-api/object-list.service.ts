@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,9 +8,10 @@ import { Observable } from 'rxjs';
 })
 export class ObjectListService {
   //BACK-END  
-  private apiUrl='http://127.0.0.1/api/objects'
+  private apiUrl='http://127.0.0.1:8000/api/drone'
   
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
+
 
   getObjects(): Observable<any[]> {
       return this.http.get<any[]>(this.apiUrl);
