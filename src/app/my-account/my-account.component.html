@@ -1,16 +1,6 @@
 <div class="body">
-    <h1> Mon Compte </h1>
     <mat-card>
         <mat-card-content>
-            <div class="navigation">
-                <button mat-button><mat-icon>account_circle</mat-icon> Informations </button>
-                <mat-divider></mat-divider>
-                <button mat-button><mat-icon>apps</mat-icon> Objets </button>
-                <mat-divider></mat-divider>
-                <button mat-button><mat-icon>notifications</mat-icon> Notifications </button>
-                <mat-divider></mat-divider>
-                <button mat-button><mat-icon>history</mat-icon> Historique du compte </button>
-            </div>
             <div class="content">
                 <div class="left">
                     <label for="fileInput" class="profile-picture">
@@ -21,50 +11,11 @@
                         <p> Pseudo </p>
                         <button mat-icon-button><mat-icon>edit</mat-icon></button>
                     </div>
-                    <p>Rang</p>
-                    <p>Niveau</p>
-                    <p>bar d'xp</p>
                 </div>
                 <div class="right">
-                    <div class="address">
-                        <mat-grid-list cols="4" rowHeight="3:1">
-                            <mat-grid-tile>
-                                @if(DataEditing.email == true){
-                                <mat-form-field>
-                                    <mat-label> Adresse email </mat-label>
-                                    <input matInput placeholder="Ex. pat@example.com" type="email" [formControl]="email"
-                                        (blur)="updateErrorMessage()" [disabled]="(isDisabled)" required />
-                                    @if (email.invalid) {
-                                    <mat-error>{{errorMessage()}}</mat-error>
-                                    }
-                                </mat-form-field>
-                                }
-                                @else {
-                                <p class="displayInfo">EMAIL</p>
-
-                                }
-                            </mat-grid-tile>
-                            <mat-grid-tile>
-                                <div class="button">
-                                    @if(DataEditing.email == true){
-                                    <button mat-icon-button matTooltip="Annuler"
-                                        (click)="DataEditing.email=!DataEditing.email"><mat-icon>cancel</mat-icon></button>
-                                    <button mat-icon-button matTooltip="Confirmer"><mat-icon>check</mat-icon></button>
-                                    }
-                                    @else {
-                                    <button mat-icon-button matTooltip="Modifier"
-                                        (click)="DataEditing.email=!DataEditing.email"><mat-icon>edit</mat-icon></button>
-                                    }
-                                </div>
-                            </mat-grid-tile>
-                            <mat-grid-tile>
-                                <button class="passwordChange" mat-stroked-button> Modifier le mot de passe</button>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <h2> Informations personnelles </h2>
                     <div class="personalInformations">
+                        <h2> Informations du compte </h2>
+                        <mat-divider></mat-divider>
                         <mat-grid-list cols="4" rowHeight="3:1">
                             <mat-grid-tile>
                                 @if (DataEditing.lastName) {
@@ -144,8 +95,37 @@
                                     }
                                 </div>
                             </mat-grid-tile>
-                            <mat-grid-tile colspan="2"></mat-grid-tile>
-                            <mat-grid-tile> @if(DataEditing.gender){
+                            <mat-grid-tile>
+                                @if(DataEditing.email == true){
+                                <mat-form-field>
+                                    <mat-label> Adresse email </mat-label>
+                                    <input matInput placeholder="Ex. pat@example.com" type="email" [formControl]="email"
+                                        (blur)="updateErrorMessage()" [disabled]="(isDisabled)" required />
+                                    @if (email.invalid) {
+                                    <mat-error>{{errorMessage()}}</mat-error>
+                                    }
+                                </mat-form-field>
+                                }
+                                @else {
+                                <p class="displayInfo">EMAIL</p>
+
+                                }
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <div class="button">
+                                    @if(DataEditing.email == true){
+                                    <button mat-icon-button matTooltip="Annuler"
+                                        (click)="DataEditing.email=!DataEditing.email"><mat-icon>cancel</mat-icon></button>
+                                    <button mat-icon-button matTooltip="Confirmer"><mat-icon>check</mat-icon></button>
+                                    }
+                                    @else {
+                                    <button mat-icon-button matTooltip="Modifier"
+                                        (click)="DataEditing.email=!DataEditing.email"><mat-icon>edit</mat-icon></button>
+                                    }
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                @if(DataEditing.gender){
                                 <mat-form-field>
                                     <mat-label> Sexe </mat-label>
                                     <mat-select [(value)]="sexe">
@@ -174,12 +154,18 @@
                                     }
                                 </div>
                             </mat-grid-tile>
+                            <mat-grid-tile>
+                                <button class="passwordChange" mat-stroked-button> Modifier le mot de passe</button>
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <button mat-stroked-button class="deleteAccount"><mat-icon>delete</mat-icon> Supprimer
+                                    mon compte
+                                </button></mat-grid-tile>
                         </mat-grid-list>
                     </div>
-                    <div class="displayInfo">
-                        <div class="contentFooter">
-                            <button mat-stroked-button><mat-icon>delete</mat-icon> Surpprimer mon compte </button>
-                        </div>
+                    <div class="myObjects">
+                        <h2> Mes objets </h2>
+                        <mat-divider></mat-divider>
                     </div>
                 </div>
             </div>

@@ -5,10 +5,6 @@
     @include body;
 }
 
-h1 {
-    @include page-header;
-}
-
 mat-card-content {
     display: flex;
     flex-direction: row;
@@ -25,38 +21,19 @@ mat-card-content {
 }
 
 mat-card {
+    width: 100%;
+    height: 100vh;
     @include card;
-}
-
-.navigation {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: $primary-color;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    color: white;
-    padding-top: 15px;
-
-    mat-divider {
-        color: white;
-    }
-
-    button {
-        display: flex;
-        flex-direction: row;
-        justify-content: left;
-        color: white !important;
-        font-size: large;
-        text-align: right;
+    mat-card-content{
+        height: 100%;
     }
 }
 
 .content {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-
+    height: 100%;
     .left,
     .right {
         display: flex;
@@ -64,7 +41,7 @@ mat-card {
     }
 
     .left {
-        width: 20%;
+        width: 25%;
         gap: 15px;
         align-items: center;
         border-right: 2px solid grey;
@@ -79,37 +56,37 @@ mat-card {
     }
 
     .right {
-        width: 80%;
+        width: 75%;
         padding-left: 20px;
         padding-right: 20px;
         height: 100%;
+        gap: 10px;
+        button.passwordChange {
+            @include action-button-style;
+        }
+
+        button.deleteAccount {
+            @include action-button-style(red, 0);
+        }
+
         .row {
             display: flex;
             flex-direction: row;
             vertical-align: middle;
             align-items: normal;
         }
-
-        .address {
-            margin-bottom: 10px;
-            button.passwordChange {
-                @include action-button-style;
-            }
-        }
-
         .personalInformations {
             color: black;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .contentFooter {
+        .myObjects {
             display: flex;
-            flex-direction: row;
-            justify-content: right;
-
-            button {
-                @include action-button-style(red, 0);
-            }
+            flex-direction: column;
+            gap: 10px;
         }
     }
 }

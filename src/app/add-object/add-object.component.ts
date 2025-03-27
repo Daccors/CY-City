@@ -20,6 +20,7 @@ import {
   MatSnackBarLabel,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
+import { ObjectListService } from '../services/laravel-api/object-list.service';
 
 export interface Object {
   name: string;
@@ -28,13 +29,14 @@ export interface Object {
   button: number
 }
 
-/* Liste à construire selon la BDD */
+/* Build list from Data Base */
 //BACK-END
 const ELEMENT_DATA: Object[] = [
   { num: 1, name: 'LAMP001', type: 'lamp', button: 1 },
   { num: 2, name: 'TRASH0001', type: 'trash', button: 2 },
 ];
 
+// snackbar : display informations on the middle-bottom of the screen (display "add to favorite" for example)
 @Component({
   selector: 'snack-bar-annotated-component-example-snack',
   template: '<span class= "example-pizza-party" matSnackBarLabel>Pizza party!!!</span>',
@@ -47,12 +49,40 @@ const ELEMENT_DATA: Object[] = [
       color: hotpink;
     }
   `,
-  imports: [MatButtonModule, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+  imports: [MatButtonModule, MatSnackBarLabel],
 })
 export class PizzaPartyAnnotatedComponent {
   snackBarRef = inject(MatSnackBarRef);
 }
 
+//Delete Dialog : opens when 'delete' button is clicked
+@Component({
+  selector: 'delete-object-dialog',
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle,
+    MatIconModule
+  ],
+  templateUrl: './delete-object-dialog.component.html',
+  styleUrl: './delete-object-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DeleteObjectDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<DeleteObjectDialogComponent>);
+  readonly data = inject<Object>(MAT_DIALOG_DATA);
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onConfirm(): void {
+    console.log("Confirm pressed for", this.data)
+  }
+}
+
+// Main component
 @Component({
   selector: 'app-add-object',
   imports: [
@@ -99,31 +129,5 @@ export class AddObjectComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
-  }
-}
-
-@Component({
-  selector: 'delete-object-dialog',
-  imports: [
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogContent,
-    MatDialogTitle,
-    MatIconModule
-  ],
-  templateUrl: './delete-object-dialog.component.html',
-  styleUrl: './delete-object-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DeleteObjectDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<DeleteObjectDialogComponent>);
-  readonly data = inject<Object>(MAT_DIALOG_DATA);
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onConfirm(): void {
-    console.log("Confirm pressed for", this.data)
   }
 }
