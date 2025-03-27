@@ -1,20 +1,32 @@
+@import './styles/mixins.scss';
+@import './styles/colors.scss';
+
 .container {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0,0,0,0);
   }
   
 .sidenav {
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 10px;
+    background-color: white;
     display: flex;
     flex-direction: column;
     width: auto;
-    background-color: rgb(107, 80, 204);
+    overflow: hidden;
+    background-color: $primary-color;
 }
 
-mat-icon {
-  font-size: xx-large;
-  color: #3f7abd;
+.sidenavButton {
+  z-index: 999999;
+  position: fixed;
+}
+
+.drawerButton{
+  background-color: $action-button-color; 
+}
+
+.drawerButton mat-icon {
+  @include icon-in-button-fab;
 }

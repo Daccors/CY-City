@@ -1,6 +1,9 @@
 <div class="sidnav-content">
     <div class="top">
-        <img src="placeholder.png" alt="Website icon" width="100%" height="150px">
+        @if(userRole != null){
+        <button mat-raised-button routerLink="my-account" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>account_circle</mat-icon> Mon compte </button>
+        }
         <button mat-raised-button routerLink="/" routerLinkActive="active" class="home-button"
             (click)="onButtonClicked()"><mat-icon>home</mat-icon>Acceuil</button>
         @if (userRole != null) {
@@ -9,7 +12,7 @@
             Test objet</button>
         }
         @if (userRole != null) {
-            <button mat-raised-button routerLink="/Mailbox" routerLinkActive="active"
+        <button mat-raised-button routerLink="/Mailbox" routerLinkActive="active"
             (click)="onButtonClicked()"><mat-icon>notifications</mat-icon> Notifications </button>
         }
     </div>
@@ -21,7 +24,6 @@
             (click)="onButtonClicked()"><mat-icon>person</mat-icon>Créer un compte</button>
         }
         @else {
-        <button mat-raised-button><mat-icon>account_circle</mat-icon> Mon compte </button>
         <button mat-raised-button (click)="logout()" class="logout"><mat-icon>logout</mat-icon> Se déconnecter </button>
         }
     </div>
