@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('localisations_id')->constrained('localisations');
             $table->string('brand');
-            $table->enum('type', ['mountain', 'BMX', 'electric', 'cyclo-cross']);
+            $table->enum('type', ['montagne', 'BMX', 'électrique', 'cyclo-cross']);
             $table->boolean('availability')->default(true);
             $table->timestamps();
         });
