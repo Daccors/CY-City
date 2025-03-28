@@ -15,6 +15,7 @@ import { ErrorStateMatcher, MatLine } from '@angular/material/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,9 +23,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
-
 @Component({
-  selector: 'app-sign-in',
+  selector: 'app-sign-in-up',
   imports: [
     MatCardModule,
     MatButtonModule,
@@ -35,11 +35,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     RouterLink,
     RouterLinkActive,
     MatCheckboxModule,
+    CommonModule
   ],
-  templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+  templateUrl: './sign-in-up.component.html',
+  styleUrl: './sign-in-up.component.scss'
 })
-export class SignInComponent {
+export class SignInUpComponent {
+  switchSignInSignUp : boolean = false;
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', Validators.required);
 
@@ -53,7 +56,7 @@ export class SignInComponent {
 
   rememberMe: boolean = false;
 
-  checkChanged(event : MatCheckboxChange) : void {
+  checkChanged(event: MatCheckboxChange): void {
     this.rememberMe = event.checked;
   }
   authService = inject(AuthService);

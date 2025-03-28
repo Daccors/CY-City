@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchBarComponent } from "./search-bar/search-bar.component";
+import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { DeviceDetectorService } from '../services/device-detector.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';

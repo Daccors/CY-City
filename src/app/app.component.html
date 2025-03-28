@@ -1,5 +1,5 @@
 <mat-drawer-container class="container" autosize>
-  <mat-drawer #drawer class="sidenav" [mode]="mode" opened>
+  <mat-drawer #drawer class="sidenav" [mode]="mode" [opened]="openDrawer">
     <app-sidnav [isMobile]="isMobile" (AutoClose)="drawer.toggle()"></app-sidnav>
   </mat-drawer>
   <div class="sidenav-content">

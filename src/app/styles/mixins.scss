@@ -28,18 +28,32 @@
     }
 }
 
+@mixin action-button-style-fab($BC : $action-button-color, $filled : 1){
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+
+    @if($filled ==1) {
+        color: white !important;
+        background-color: $BC !important;
+    }
+
+    @else {
+        color: $BC !important;
+        background-color: transparent;
+        border: 2px solid $BC;
+    }
+}
+
 @mixin page-header($flex : center) {
     color: white;
     background-color: $primary-color;
     border-radius: 30px;
-    font-size: 50px;
-    line-height: 73px;
-    height: 73px;
+    font-size: 6vh;
     align-content: center;
     align-items: center;
     display: flex;
     justify-content: $flex;
-    padding: 15px;
+    padding: 3vh;
 
     mat-icon {
         flex: none;
@@ -47,7 +61,6 @@
 }
 
 @mixin icon-in-button-fab {
-    font-size: 22px;
     line-height: 1;
     vertical-align: middle;
     align-items: center;
@@ -60,7 +73,7 @@
 
 @mixin body {
     padding: 5px;
-    gap: 10px;
+    gap: 10vh 10vw;
     display: flex;
     flex-direction: column;
     width: 100%;

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { DeviceDetectorService } from '../../services/device-detector.service';
+import { DeviceDetectorService } from '../services/device-detector.service';
 
 @Component({
   selector: 'app-search-bar',
