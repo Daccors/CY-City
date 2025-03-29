@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('capacity', 5, 2);
             $table->boolean('opened')->default(false);
             $table->date('last_collection');
-            $table->enum('stat', ['on', 'off', 'updating']);
+            $table->enum('stat', ['allumé', 'éteint', 'mise à jour']);
             $table->timestamps();
         });
     }

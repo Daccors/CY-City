@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('addresses_id')->constrained('addresses');
             $table->foreignId('localisations_id')->constrained('localisations');
-            $table->enum('stat', ['on', 'off', 'updating']);
+            $table->enum('stat', ['allumé', 'éteint', 'mise à jour']);
             $table->float('batterie', 4, 2);
             $table->float('capacity', 4, 2);
             $table->time('departure');
