@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ɵɵtextInterpolate7 } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -16,6 +16,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { SelectionListHarnessFilters } from '@angular/material/list/testing';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,6 +24,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
+export interface newUser{
+  email:string,
+  clear_password:string, 
+  username:string
+}
+
 @Component({
   selector: 'app-sign-in-up',
   imports: [
@@ -49,6 +57,8 @@ export class SignInUpComponent {
   matcher = new MyErrorStateMatcher();
   matcherpsw = new MyErrorStateMatcher();
 
+  //Connexion
+  
   LoginObjt: any = {
     mail: '',
     password: ''
@@ -84,5 +94,9 @@ export class SignInUpComponent {
           console.error(err);
         }
       });
+  }
+
+  onRegister(): boolean{
+    return false; 
   }
 }

@@ -6,7 +6,7 @@ import { DeviceDetectorService } from '../services/device-detector.service';
 @Component({
   selector: 'app-search-bar',
   standalone : true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })

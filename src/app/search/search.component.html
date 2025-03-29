@@ -24,6 +24,16 @@
                 <h2> Instances </h2>
             </div>
             <mat-divider></mat-divider>
+            <div class="Instances">
+                @for (drone of drones(); track drone.id) {
+                <app-object-card [object]="drone"></app-object-card>
+                }
+              <!--  @for (bike of bikes(); track bike.id){
+                    <app-object-card [object]="bike"></app-object-card>
+                }-->
+            </div>
+            <p>Search by id</p>
+            <app-object-card [object]="UniqueDrone()"></app-object-card>
         </mat-card-content>
     </mat-card>
 </div>

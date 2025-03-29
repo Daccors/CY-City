@@ -1,5 +1,5 @@
-@import '../styles/colors';
-@import '../styles/mixins';
+@use '../styles/colors' as *;
+@use '../styles/mixins' as *;
 
 .body {
     @include body;
@@ -14,7 +14,7 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    gap: 2vh;
+    gap: 1vh;
     flex: 1; // Permet de donner une largeur égale aux deux
     align-items: center;
     text-align: center;
@@ -33,7 +33,9 @@ mat-card {
 }
 
 .backContainer{
-    padding: 5vw;
+    padding-left: 2vw;
+    padding-right: 2vh;
+    margin: 2vh;
     gap: 10vw;
     display: flex;
     flex-direction: row;

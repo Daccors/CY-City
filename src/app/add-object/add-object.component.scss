@@ -1,8 +1,7 @@
-@import '../styles/mixins.scss';
-@import '../styles/colors.scss';
+@use '../styles/mixins' as *;
+@use '../styles/colors' as *;
 
 mat-card {
-    @include card;
     height: 100vh;
     width: 100%;
 

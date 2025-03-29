@@ -11,11 +11,11 @@ import { SearchComponent } from './search/search.component';
 
 export const routes: Routes = [
     { path: '', title: "Menu principal", component: HomeComponent },
-    { path: 'add_object', component: AddObjectComponent, canActivate:[authGuard], data:{roles:['admin']} },
-    { path: 'search', component: SearchComponent},
-    { path: 'sign_in_up', component: SignInUpComponent},
-    { path: 'add_object_form', component: AddObjectFormComponent, canActivate:[authGuard], data: {roles:['admin']}},
-    { path: 'my-account', component: MyAccountComponent},
-    { path: 'Unauthorized', component: UnauthorizedComponent},
+    { path: 'add_object', title:'Page de test', component: AddObjectComponent, canActivate:[authGuard], data:{roles:['admin']} },
+    { path: 'search', title:'Recherche', component: SearchComponent},
+    { path: 'sign_in_up', title:'CY-City identification', component: SignInUpComponent},
+    { path: 'add_object_form', title:'Ajouter un objet', component: AddObjectFormComponent, canActivate:[authGuard], data: {roles:['admin']}},
+    { path: 'my-account', title:'Mon compte', component: MyAccountComponent},
+    { path: 'Unauthorized', title:'Erreur 401 (Accès refusé)', component: UnauthorizedComponent},
     { path: '**', redirectTo: '' },
 ];

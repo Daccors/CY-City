@@ -1,4 +1,4 @@
-@import 'colors';
+@use 'colors' as *;
 
 @mixin action-button-style($BC : $action-button-color, $filled : 1) {
     vertical-align: middle;

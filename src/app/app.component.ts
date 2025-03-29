@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd, ActivatedRoute, ChildActivationStart, RoutesRecognized } from '@angular/router';
+import { RouterOutlet, Router, RoutesRecognized } from '@angular/router';
 import { SidnavComponent } from "./sidnav/sidnav.component";
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DeviceDetectorService } from './services/device-detector.service';
 import { AuthService } from './services/auth.service';
-import { Title } from "@angular/platform-browser";
 import { ObjectListService } from './services/laravel-api/object-list.service';
-import { RouterTestingHarness } from '@angular/router/testing';
 
 @Component({
   selector: 'app-root',
@@ -25,14 +23,12 @@ export class AppComponent implements OnInit {
   deviceType: string = '';
   isMobile: boolean = false;
   currentPage: string = '';
-  openDrawer : boolean = true;
+  openDrawer: boolean = true;
 
   constructor(private deviceDetectorService: DeviceDetectorService, private authService: AuthService, public router: Router, private objectService: ObjectListService) {
   }
   userRole: String | null = null;
   ngOnInit(): void {
-
-    console.log(this.objectService.getObjects());
     // Récupérer le type d'appareil au moment du chargement du composan
     this.userRole = this.authService.getUserRole();
 
@@ -48,10 +44,10 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof RoutesRecognized) {
         this.currentPage = event['url'];
-        if(this.currentPage == '/sign_in_up'){
+        if (this.currentPage == '/sign_in_up') {
           this.openDrawer = false;
         }
-        else{
+        else {
           this.openDrawer = true;
         }
       }

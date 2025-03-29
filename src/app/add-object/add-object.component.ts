@@ -21,6 +21,7 @@ import {
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
 import { ObjectListService } from '../services/laravel-api/object-list.service';
+/* Build list from Data Base */
 
 export interface Object {
   name: string;
@@ -29,7 +30,6 @@ export interface Object {
   button: number
 }
 
-/* Build list from Data Base */
 //BACK-END
 const ELEMENT_DATA: Object[] = [
   { num: 1, name: 'LAMP001', type: 'lamp', button: 1 },

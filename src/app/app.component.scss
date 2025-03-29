@@ -1,5 +1,5 @@
-@import './styles/mixins.scss';
-@import './styles/colors.scss';
+@use './styles/mixins.scss' as *;
+@use './styles/colors.scss' as *;
 
 .container {
     height: 100vh;

@@ -35,6 +35,14 @@
             <div class="signIn">
                 <h3> Inscription </h3>
                 <mat-form-field>
+                    <mat-label> Nom d'utilisateur </mat-label>
+                    <input type="text" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
+                        [(ngModel)]="LoginObjt.password">
+                    @if (passwordFormControl.hasError('required')) {
+                    <mat-error> Le mot de passe est obligatoire </mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
                     <mat-label> Adresse Mail </mat-label>
                     <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
                         placeholder="Ex. pat@example.com" [(ngModel)]="LoginObjt.mail">
@@ -64,6 +72,7 @@
                 <div>
                     <mat-checkbox> Accepter les conditions d'utilisation </mat-checkbox>
                 </div>
+                <button mat-stroked-button (click)="onRegister()"> S'inscrire </button>
             </div>
         </div>
         <div class="frontContainer" [ngClass]="switchSignInSignUp ? 'Left' : 'Right'">
