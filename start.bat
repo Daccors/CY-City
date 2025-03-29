@@ -1,28 +1,36 @@
 #!/bin/bash
 
-erreur=-1
+start_backend(){
+    echo "-------------- starting backend --------------"
+    erreur=-1
+    cd ./backend
 
-echo "============== starting backend =============="
-cd ./backend
+    php artisan serve &
+    erreur=$?
 
-php artisan serve
-erreur=$?
+    if (( $erreur != 0 )) ; then
+        echo
+        echo "$0: 'php artisan serve' didn't work as espected and terminated with : $erreur"
+        exit 1
+    fi
 
-if (( $erreur != 0 )) ; then
-    echo
-    echo "$0: 'php artisan serve' didn't work as espected and terminated with : $erreur"
-    exit 1
-fi
+    cd ..
+    echo "============== backend succesfully started =============="
+}
 
-cd ..
-echo "============== backend online =============="
 
-echo ; echo ; echo ;
-echo "============== starting angular =============="
+
+start_backend &
+
+echo "-------------- starting angular --------------"
 
 ng serve
 erreur=$?
 
-echo $erreur
+if (( $erreur != 0 )) ; then
+    echo
+    echo "$0: 'ng serve' didn't work as espected and terminated with : $erreur"
+    exit 2
+fi
 
-echo "============== angular online =============="
+echo "============== angular stoped =============="
