@@ -5,7 +5,7 @@ start_backend(){
     erreur=-1
     cd ./backend
 
-    php artisan serve &
+    php artisan serve
     erreur=$?
 
     if (( $erreur != 0 )) ; then
