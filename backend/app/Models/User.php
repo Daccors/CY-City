@@ -28,7 +28,8 @@ class User extends Authenticatable
         'status',
         'password',
         'level_id',
-        'address_id'
+        'address_id',
+        'role'
     ];
 
     public function actions()
