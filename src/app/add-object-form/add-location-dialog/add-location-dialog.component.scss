@@ -1,0 +1,29 @@
+@use '../../styles/mixins.scss' as *;
+@use '../../styles/colors.scss' as *;
+
+// Styles de base
+.cancel-button {
+    @include action-button-style(red, 0);
+    transition: all 0.5s ease;
+}
+
+.confirm-button {
+    @include action-button-style($action-button-color, 0);
+    transition: all 0.5s ease;
+}
+
+// Effet au survol
+.cancel-button:hover {
+    @include action-button-style(red, 1);
+}
+
+.confirm-button:hover {
+    @include action-button-style($action-button-color, 1);
+}
+
+// Disposition
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

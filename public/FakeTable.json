@@ -1,0 +1,135 @@
+[
+    {
+        "ObjectType": "drone",
+        "atributs": {
+            "id": "number",
+            "addresses_id": "number",
+            "localisations_id": "number",
+            "stat": "string",
+            "batterie": "number",
+            "capacity": "number",
+            "departure": "Date",
+            "estimated_arrival_time": "Date",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "batterie",
+            "capacity",
+            "stat"
+        ],
+        "display": [
+            "Batterie",
+            "Capacité",
+            "Status"
+        ],
+        "icon": "local_shipping"
+    },
+    {
+        "ObjectType": "bike",
+        "atributs": {
+            "id": "number",
+            "localisation_id": "number",
+            "brand": "string",
+            "type": "string",
+            "availability": "number",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "availability",
+            "type"
+        ],
+        "display": [
+            "Disponible",
+            "Type"
+        ],
+        "icon": "pedal_bike"
+    },
+    {
+        "ObjectType": "screen",
+        "atributs": {
+            "id": "number",
+            "localisations_id": "number",
+            "type_of_content": "string",
+            "stat": "string",
+            "last_content_update": "Date",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "stat",
+            "type_of_content"
+        ],
+        "display": [
+            "Status",
+            "Contenu"
+        ],
+        "icon": "tv"
+    },
+    {
+        "ObjectType": "bin",
+        "attributs": {
+            "id": "number",
+            "localisations_id": "number",
+            "capacity": "number",
+            "opened": "number",
+            "last_collection": "Date",
+            "stat": "string",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "stat",
+            "capacity",
+            "last_collection"
+        ],
+        "display": [
+            "Status",
+            "Niveau de remplisage",
+            "Dernier Passage"
+        ],
+        "icon": "delete"
+    },
+    {
+        "ObjectType": "lamp",
+        "attributs": {
+            "id": "number",
+            "localisations_id": "number",
+            "stat": "string",
+            "intensity": "number",
+            "battery": "number",
+            "presence": "number",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "stat",
+            "battery",
+            "intensity"
+        ],
+        "display": [
+            "Status",
+            "Batterie",
+            "Intensité lumineuse"
+        ],
+        "icon": "lightbulb"
+    },
+    {
+        "ObjectType": "parking",
+        "atributs": {
+            "id": "number",
+            "localisations_id": "number",
+            "availability": "number",
+            "created_at": "Date",
+            "updated_at": "Date"
+        },
+        "relevantAtt": [
+            "availability"
+        ],
+        "display": [
+            "Nombre de places"
+        ],
+        "icon": "lightbulb"
+    }
+]
