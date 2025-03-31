@@ -1,5 +1,6 @@
 @use '../styles/mixins' as *;
 @use '../styles/colors' as *;
+@use '@angular/material' as mat;
 
 .body {
     @include body;
@@ -12,6 +13,14 @@
     text-align: left;
     padding-top: 10px;
     gap: 14px !important;
+}
+
+.form {
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
 }
 
 .IPFORM {
@@ -36,6 +45,7 @@ h1 {
     @include page-header;
     text-align: center;
 }
+
 .addLocalization {
     margin-top: 10px;
     display: flex;
@@ -52,29 +62,32 @@ h1 {
     gap: 15px;
     justify-content: flex-end;
 
-    .cancel{
+    .cancel {
         @include action-button-style(red);
     }
-    .Add{
+
+    .Add {
         @include action-button-style;
     }
-    button:hover{
+
+    button:hover {
         transform: translateY(-2px);
     }
 }
 
-.description{
+.description {
     display: flex;
     flex-direction: row;
     width: 100%;
     max-height: 100%;
 }
 
-mat-card{
+mat-card {
     width: 100%;
     height: fit-content;
     min-height: 100vh;
-    mat-card{
+
+    mat-card {
         width: 100%;
         height: 100%;
         display: flex;

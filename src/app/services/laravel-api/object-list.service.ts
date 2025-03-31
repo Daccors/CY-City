@@ -1,14 +1,15 @@
 import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 import * as InstancesInterfaces from '../../shared/InstancesInterfaces';
+import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObjectListService {
   public objTypes: (keyof InstancesInterfaces.ObjectTypes)[] = ['drone', 'bike', 'screen', 'bin', 'lamp', 'parking'];
-  private apiUrl = 'http://127.0.0.1:8000/api/';
+  private apiUrl = 'http://127.0.0.1:8000/api';
   private objectsMap = new Map<keyof InstancesInterfaces.ObjectTypes, {
     all: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes][]>;
     unique: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes] | null>;
@@ -36,21 +37,20 @@ export class ObjectListService {
     }
   }
 
-  getObjects<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, url: string): Observable<InstancesInterfaces.ObjectTypes[T][]> {
+  getObjects<T extends keyof InstancesInterfaces.ObjectTypes>(type: T): Observable<InstancesInterfaces.ObjectTypes[T][]> {
     this.registerObjectType(type);
 
-    return this.http.get<InstancesInterfaces.ObjectTypes[T][]>(url).pipe(
+    return this.http.get<InstancesInterfaces.ObjectTypes[T][]>(`${this.apiUrl}/${type}`).pipe(
       tap((data) => {
         this.objectsMap.get(type)!.all.set(data);
       })
     );
   }
 
-
-  getObjectById<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, url: string, id: number): Observable<InstancesInterfaces.ObjectTypes[T]> {
+  getObjectById<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, id: number): Observable<InstancesInterfaces.ObjectTypes[T]> {
     this.registerObjectType(type);
 
-    return this.http.get<InstancesInterfaces.ObjectTypes[T]>(`${url}/${id}`).pipe(
+    return this.http.get<InstancesInterfaces.ObjectTypes[T]>(`${this.apiUrl}/${type}/${id}`).pipe(
       tap((data) => {
         this.objectsMap.get(type)!.unique.set(data);
       })
@@ -65,18 +65,29 @@ export class ObjectListService {
     return this.objectsMap.get(type)?.unique || signal<InstancesInterfaces.ObjectTypes[T] | null>(null);
   }
 
-  
-  addUniqueObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, object: any): boolean {
-    let respons: any;
-    this.http.post<InstancesInterfaces.ObjectTypes[T][]>(`${this.apiUrl}/${type}`, object).subscribe(response => console.log(response));
-    return(true);
+
+  addObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, object: InstancesInterfaces.ObjectTypes[T]): Observable<InstancesInterfaces.ObjectTypes[T]> {
+    this.registerObjectType(type);
+
+    return this.http.post<InstancesInterfaces.ObjectTypes[T]>(`${this.apiUrl}/${type}`, object).pipe(
+      tap((data) => {
+        const currentData = this.objectsMap.get(type)!.all();
+      this.objectsMap.get(type)!.all.set([...currentData, data] as InstancesInterfaces.ObjectTypes[T][]);
+      })
+    );
+  }
+  async getFirstAvailableIndex<T extends keyof InstancesInterfaces.ObjectTypes>(type: T): Promise<number> {
+    const response = await firstValueFrom(this.getObjects(type));
+    this.registerObjectType(type); // Enregistre l'objet
+    const objects = this.objectsMap.get(type)?.all() ?? [];
+
+    return objects.length + 1;
   }
 
-  /*this.objectListService.getObjects('drone', 'http://127.0.0.1:8000/api/drone').subscribe();
+}
+
+/*this.objectListService.getObjects('drone', 'http://127.0.0.1:8000/api/drone').subscribe();
 this.objectListService.getObjects('bike', 'http://127.0.0.1:8000/api/bike').subscribe();
 const drones = this.objectListService.objectsMap.get('drone')!.all();
 const uniqueDrone = this.objectListService.objectsMap.get('drone')!.unique();
-
-
 */
-}

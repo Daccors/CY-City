@@ -9,7 +9,7 @@ import { localisation } from '../../shared/InstancesInterfaces';
 import { merge } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSnackBar, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-location-dialog',
@@ -65,14 +65,27 @@ export class AddLocationDialogComponent {
   }
 
   onConfirm(): void {
-    console.log(this.Longitude, this.Latitude);
+    const newLocalisation: localisation = {
+      id: this.LocalisationAdd.getFirstAvailableIndex('localisation'),
+      longitude: this.Longitude,
+      latitude: this.Latitude,
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+
+    this.LocalisationAdd.addObject('localisation', newLocalisation).subscribe((response) => {
+      console.log('Localisation added:', response);
+    });
     this.dialogRef.close();
-    this.openSnackBar();
+    this.openSnackBar(this.LocalisationAdd.getFirstAvailableIndex('localisation'));
   }
 
-  openSnackBar() {
+  openSnackBar(localisationID: number) {
     this._snackbar.openFromComponent(PizzaPartyAnnotatedComponent, {
       duration: this.duration * 1000,
+      data: {
+        localisationID
+      }
     });
   }
 }
@@ -81,7 +94,7 @@ export class AddLocationDialogComponent {
 @Component({
   selector: 'snack-bar-annotated-component',
   template: `<span matSnackBarLabel>
-  Localisation ajouter avec l'ID : {{localisationID }}
+  Localisation ajouter avec l'ID : {{ data.localisationID }}
 </span>
 <span matSnackBarActions>
   <button mat-button matSnackBarAction (click)="snackBarRef.dismissWithAction()">Ok</button>
@@ -97,6 +110,6 @@ export class AddLocationDialogComponent {
 })
 export class PizzaPartyAnnotatedComponent {
   snackBarRef = inject(MatSnackBarRef);
-  localisationID: number = 0;
+  data = inject(MAT_SNACK_BAR_DATA);
 
 }
