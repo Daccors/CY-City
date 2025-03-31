@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\SmartBinController;
 use App\Http\Controllers\Api\SmartLampController;
 use App\Http\Controllers\Api\CreateTableController;
 use App\Http\Controllers\Api\DynamicTableController;
+use App\Http\Controllers\Api\TableMetaDataController;
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,29 +27,56 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 })->middleware('auth:sanctum');*/
 
-Route::get('/allTables', function () {
-    return [
+Route::get('/allTables', function (){
+    $result = [
         'users' => \App\Models\User::all(),
-        'actions' => \App\Models\Action::all(),
         'addresses' => \App\Models\Address::all(),
         'articles' => \App\Models\Article::all(),
         'bikes' => \App\Models\Bike::all(),
-        'connections' => \App\Models\Connection::all() ?? [],
-        'consults' => \App\Models\Consult::all() ?? [],
         'deliveringDrones' => \App\Models\DeliveringDrone::all(),
-        'havings' => \App\Models\Having::all(),
         'informationScreens' => \App\Models\InformationScreen::all(),
-        'levels' => \App\Models\Level::all(),
         'localisations' => \App\Models\Localisation::all(),
-        'modifies' => \App\Models\Modify::all() ?? [],
         'parkingSensors' => \App\Models\ParkingSensor::all(),
         'smartBins' => \App\Models\SmartBin::all(),
         'smartLamps' => \App\Models\SmartLamp::all(),
     ];
+    
+    $tables = [];
+    
+        $tables = collect(\DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"))
+            ->pluck('name')
+            ->all();
+
+    $ignoreTables = [
+        'migrations', 'failed_jobs', 'password_resets', 'personal_access_tokens',
+        'users', 'actions', 'addresses', 'articles', 'bikes', 'connections', 'consults',
+        'delivering_drones', 'havings', 'information_screens', 'levels', 'localisations',
+        'modifies', 'parking_sensors', 'smart_bins', 'smart_lamps'
+    ];
+    
+    foreach ($tables as $table) {
+        if (in_array($table, $ignoreTables)){
+            continue;
+        }
+
+        $modelName = \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
+        $modelClass = "App\\Models\\{$modelName}";
+        
+        if (class_exists($modelClass)) {
+            $key = \Illuminate\Support\Str::camel($table);
+            try {
+                $result[$key] = $modelClass::all();
+            } catch (\Exception $e) {
+                $result[$key] = ["error" => "Erreur lors du chargement des données: " . $e->getMessage()];
+            }
+        }
+    }
+    
+    return $result;
 });
 
-Route::get('/allTables/objects', function () {
-    return [
+Route::get('/allTables/objects', function (){
+    $result = [
         'bikes' => \App\Models\Bike::all(),
         'deliveringDrones' => \App\Models\DeliveringDrone::all(),
         'informationScreens' => \App\Models\InformationScreen::all(),
@@ -55,9 +84,42 @@ Route::get('/allTables/objects', function () {
         'smartBins' => \App\Models\SmartBin::all(),
         'smartLamps' => \App\Models\SmartLamp::all(),
     ];
+    
+    $tables = [];
+    
+    $tables = collect(\DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"))
+            ->pluck('name')
+            ->all();
+
+    $ignoreTables = [
+        'migrations', 'failed_jobs', 'password_resets', 'personal_access_tokens',
+        'users', 'actions', 'addresses', 'articles', 'bikes', 'connections', 'consults',
+        'delivering_drones', 'havings', 'information_screens', 'levels', 'localisations',
+        'modifies', 'parking_sensors', 'smart_bins', 'smart_lamps'
+    ];
+    
+    foreach ($tables as $table) {
+        if (in_array($table, $ignoreTables)){
+            continue;
+        }
+        
+        $modelName = \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
+        $modelClass = "App\\Models\\{$modelName}";
+        
+        if (class_exists($modelClass)) {
+            $key = \Illuminate\Support\Str::camel($table);
+            try {
+                $result[$key] = $modelClass::all();
+            } catch (\Exception $e) {
+                $result[$key] = ["error" => "Erreur lors du chargement des données: " . $e->getMessage()];
+            }
+        }
+    }
+    
+    return $result;
 });
 
-Route::prefix('allTables')->group(function () {
+Route::prefix('allTables')->group(function (){
     Route::apiResource('user', UserController::class);
     Route::apiResource('action', ActionController::class);
     Route::apiResource('address', AddressController::class);
@@ -66,8 +128,9 @@ Route::prefix('allTables')->group(function () {
     Route::apiResource('level', LevelController::class);
     Route::apiResource('localisation', LocalisationController::class);
     Route::apiResource('modify', ModifyController::class);
+    Route::get('search', [SearchController::class, 'search']);
     
-    Route::prefix('objects')->group(function () {
+    Route::prefix('objects')->group(function (){
         Route::apiResource('bike', BikeController::class);
         Route::apiResource('drone', DeliveringDroneController::class);
         Route::apiResource('screen', InformationScreenController::class);
@@ -76,11 +139,17 @@ Route::prefix('allTables')->group(function () {
         Route::apiResource('lamp', SmartLampController::class);
         
         Route::post('createTable', [CreateTableController::class, 'createTable']);
+
+        Route::get('search', [SearchController::class, 'search']);
+        
+        Route::get('{table}', [DynamicTableController::class, 'index']);
+        Route::post('{table}', [DynamicTableController::class, 'store']);
+        Route::get('{table}/{id}', [DynamicTableController::class, 'show']);
+        Route::put('{table}/{id}', [DynamicTableController::class, 'update']);
+        Route::delete('{table}/{id}', [DynamicTableController::class, 'destroy']);
+
+        
     });
 });
 
-Route::get('allTables/objects/{table}/{id}', [DynamicTableController::class, 'show']);
-Route::post('allTables/objects/{table}', [DynamicTableController::class, 'store']);
-Route::put('allTables/objects/{table}/{id}', [DynamicTableController::class, 'update']);
-Route::delete('allTables/objects/{table}/{id}', [DynamicTableController::class, 'destroy']);
-Route::get('allTables/objects/{table}', [DynamicTableController::class, 'index']);
+Route::apiResource('/data', TableMetadataController::class);

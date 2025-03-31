@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\File;
 
 class CreateTableController extends Controller
 {
-    public function createTable(Request $request)
-{
+    public function createTable(Request $request){
     $request->validate([
         'table_name' => 'required|string',
         'columns' => 'required|array',
@@ -21,23 +20,26 @@ class CreateTableController extends Controller
     $tableName = $request->table_name;
     $columns = $request->columns;
 
-    if (Schema::hasTable($tableName)) {
+    if (Schema::hasTable($tableName)){
         return response()->json(['message' => 'Table already exists'], 400);
     }
 
-    Schema::create($tableName, function (Blueprint $table) use ($columns) {
+    Schema::create($tableName, function (Blueprint $table) use ($columns){
         $table->id();
-        foreach ($columns as $column) {
+        foreach ($columns as $column){
             $type = $column['type'] ?? 'string';
             $name = $column['name'];
 
             if ($type === 'string') {
                 $table->string($name);
-            } elseif ($type === 'integer') {
+            } 
+            elseif ($type === 'integer'){
                 $table->integer($name);
-            } elseif ($type === 'boolean') {
+            } 
+            elseif ($type === 'boolean'){
                 $table->boolean($name);
-            } elseif ($type === 'text') {
+            } 
+            elseif ($type === 'text'){
                 $table->text($name);
             }
         }
