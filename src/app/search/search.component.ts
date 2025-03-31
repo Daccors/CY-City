@@ -34,7 +34,7 @@ export class SearchComponent {
       const type = obj.ObjectType;
       const url = `http://127.0.0.1:8000/api/${type}`; // URL dynamique basée sur le type
       this.allObjects[type] = this.ObjectsList.getAllObjects(type as keyof ObjectTypes); // Initialise le signal vide
-      this.ObjectsList.getObjects(type as keyof ObjectTypes, url).subscribe((data) => {
+      this.ObjectsList.getObjects(type as keyof ObjectTypes).subscribe((data) => {
         this.allObjects[type].set(data); // Remplit le signal avec les données reçues
       });
     });

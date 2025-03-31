@@ -75,4 +75,10 @@ export class InformationsControlerService {
       })
     );
   }
+
+  getFirstAvailableIndex<T extends 'user' | 'localisation' | 'level'>(type: T): number {
+    this.registerObjectType(type);
+    const currentData = this.informationsMap.get(type)!.all();
+    return currentData.length+1;
+  }
 }
