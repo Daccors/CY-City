@@ -1,5 +1,5 @@
 # CY-City
-![`La Ville de Cergy`](public\laVille.png)
+![`La Ville de Cergy`](public/laVille.png)
 
 ## Installation des frameworks et API
 ### Angular CLI
