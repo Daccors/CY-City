@@ -3,7 +3,7 @@
 
 mat-card {
     width: max-content;
-    border: 2px solid aqua !important;
+    border: 2px solid $object-color !important;
 
     mat-card-content {
         display: flex;
@@ -14,7 +14,7 @@ mat-card {
     mat-card-actions {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         padding-left: 15px;
         padding-right: 15px;
         button {

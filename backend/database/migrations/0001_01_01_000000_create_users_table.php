@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('photo')->nullable();
-            $table->string('name')->nullable();
-            $table->string('surname')->nullable();
+            $table->string('name');
+            $table->string('surname');
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('gender', ['H', 'F', 'O'])->nullable();

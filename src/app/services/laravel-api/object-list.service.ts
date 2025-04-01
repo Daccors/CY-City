@@ -49,7 +49,6 @@ export class ObjectListService {
 
   getObjectById<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, id: number): Observable<InstancesInterfaces.ObjectTypes[T]> {
     this.registerObjectType(type);
-
     return this.http.get<InstancesInterfaces.ObjectTypes[T]>(`${this.apiUrl}/${type}/${id}`).pipe(
       tap((data) => {
         this.objectsMap.get(type)!.unique.set(data);
@@ -64,7 +63,6 @@ export class ObjectListService {
   getUniqueObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T) {
     return this.objectsMap.get(type)?.unique || signal<InstancesInterfaces.ObjectTypes[T] | null>(null);
   }
-
 
   addObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, object: InstancesInterfaces.ObjectTypes[T]): Observable<InstancesInterfaces.ObjectTypes[T]> {
     this.registerObjectType(type);
