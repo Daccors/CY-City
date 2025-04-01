@@ -72,15 +72,19 @@ Route::get('/allTables/objects', function (){
 });
 
 Route::prefix('allTables')->group(function (){
-    Route::apiResource('user', UserController::class);
+
+    Route::get('search', [SearchController::class, 'search']);
+    Route::get('users/search', [SearchController::class, 'search']);
+    Route::get('articles/search', [SearchController::class, 'search']);
+
+    Route::apiResource('users', UserController::class);
     Route::apiResource('action', ActionController::class);
     Route::apiResource('address', AddressController::class);
-    Route::apiResource('article', ArticleController::class);
+    Route::apiResource('articles', ArticleController::class);
     Route::apiResource('having', HavingController::class);
     Route::apiResource('level', LevelController::class);
     Route::apiResource('localisation', LocalisationController::class);
     Route::apiResource('modify', ModifyController::class);
-    Route::get('search', [SearchController::class, 'search']);
     
     Route::prefix('objects')->group(function (){
         Route::apiResource('bike', BikeController::class);

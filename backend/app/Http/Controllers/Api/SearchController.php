@@ -13,6 +13,8 @@ class SearchController extends Controller
     public function search(Request $request){
         $searchTerm = $request->input('string');
         $objectsSearch = Str::contains($request->path(), 'objects/search');
+        $usersSearch = Str::contains($request->path(), 'users');
+        $articleSearch = Str::contains($request->path(), 'articles');
         
         if (empty($searchTerm)){
             return response()->json(['message' => 'Search term is required'], 400);
@@ -29,15 +31,23 @@ class SearchController extends Controller
             'connections', 'levels', 'modifies', 'actions', 'consults', 'havings'
         ];
 
-        if ($objectsSearch) {
+        if($objectsSearch) {
             $nonObjects = ['users', 'addresses', 'articles', 'localisations'];
             $ignoreTables = array_merge($ignoreTables, $nonObjects);
         }
+
+        else if($usersSearch){
+            $tables = ['users'];
+        }
+
+        else if($articleSearch){
+            $tables = ['articles'];
+        }        
         
         $excludeFields = ['password', 'created_at', 'updated_at', 'content', 'description', 'remember_token'];
         
-        foreach ($tables as $table) {
-            if (in_array($table, $ignoreTables)){
+        foreach($tables as $table) {
+            if(in_array($table, $ignoreTables)){
                 continue;
             }
             
