@@ -67,7 +67,6 @@ Route::get('/allTables/objects', function (){
             }
         }
     }
-    
     return $result;
 });
 
