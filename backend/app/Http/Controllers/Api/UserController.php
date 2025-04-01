@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Level;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,31 +19,32 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
+        try{$fields = $request->validate([
             'username' => 'required',
             'surname' => 'required',
             'photo' => 'nullable',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:H,F,X',
-            'birthdate' => 'required|date',
-            'status' => 'required',
+            'gender' => 'nullable|in:H,F,X',
+            'birthdate' => 'nullable|date',
+            'status' => 'nullable',
             'password' => 'required|min:6',
             'address_id' => 'nullable'
-        ]);
+        ]);}
+        catch(Exception $e){
+            return $e.getCode();
+        }
 
         $defaultLevel = Level::create([
             'type' => 'simple',
             'points' => 0
         ]);
         $fields['level_id'] = $defaultLevel->id;
+        $fields['password'] = Hash::make($fields['password']);
 
         $user = User::create($fields);
 
-        return response()->json([
-            $user,
-            'message' => 'User created successfully'
-        ], 201);
+        return response()->json(['true'], 201);
     }
 
     public function show(User $user){
@@ -71,13 +73,11 @@ class UserController extends Controller
         $user->update($fields);
 
         return response()->json([
-            'user' => $user,
             'message' => 'User updated successfully'
         ], 200);
     }
 
     public function destroy(User $user){
-        $user->delete();
         return ['message' => 'Utilisateur supprimé'];
     }
 
