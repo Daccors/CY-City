@@ -1,9 +1,10 @@
-<div class="body">
-    <mat-card>
-        <mat-card-content>
+<mat-card>
+    <mat-card-content>
+        <div class="column">
             <mat-stepper orientation="vertical" #stepper linear="true">
                 <mat-step label="Informations primaires" class="FirstStep">
-                    <app-dynamic-form-field (formEmit)="formValues($event)"  (nextEmit)="stepper.next()"></app-dynamic-form-field>
+                    <app-dynamic-form-field (formEmit)="formValues($event)"
+                        (nextEmit)="stepper.next()"></app-dynamic-form-field>
                     <!--<div class="NAME">
                         <mat-form-field>
                             <mat-label> Nom </mat-label>
@@ -38,17 +39,20 @@
                             emplacement</button>
                     </div>
                 </mat-step>
-               <!-- <mat-step label="Informations Complémentaires">
+                <!-- <mat-step label="Informations Complémentaires">
                     <mat-form-field class="description">
                         <mat-label> Description </mat-label>
                         <textarea matInput type="text"></textarea>
                     </mat-form-field>
                 </mat-step>-->
             </mat-stepper>
+            <mat-divider></mat-divider>
             <div class="actionButton">
                 <button mat-stroked-button class="cancel" routerLink="/" routerLinkActive="active"> Annuler </button>
-                <button mat-button class="Add" (click)="onSubmit()"> Ajouter </button>
+                <button mat-button class="Add" (click)="onSubmit()" routerLink="/search" routerLinkActive="active">
+                    Ajouter
+                </button>
             </div>
-        </mat-card-content>
-    </mat-card>
-</div>
+        </div>
+    </mat-card-content>
+</mat-card>

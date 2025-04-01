@@ -41,6 +41,7 @@ export class DynamicFormFieldComponent {
   onTypeChange(newType: string) {
     this.selectedType = newType;
     this.currentMetadata = metadata2[newType] || [];
+    this.form = new FormGroup([]);
     this.buildForm();
   }
 

@@ -1,59 +1,47 @@
-# Test
+# CY-City
+![La Ville de Cergy](public\laVille.png)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.6.
+## Installation des frameworks et API
+### Angular CLI
+Pour télécharger angular, il vous faudra d'abord **node.js** que vous pouvez télécharger sur [le site de nodejs]("https://nodejs.org/en").
 
-## Development server
+Un fois node.js correctement installé, faire `npm install -g @angular/cli` pour télécharger angular CLI.
 
-To start a local development server, run:
+Il faudra aussi installer un module en faisant `ng add @angular/material`.
 
-```bash
-ng serve
-```
+### Laravel
+Pour utiliser laravel il faudra avoir **php** d'installé.
+Vous pourrez le trouver [sur le site de php](https://www.php.net/).
+Certaines sources indique aussi qu'il vous faudra **Composer** téléchargable [`ici`](https://getcomposer.org/download/)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Superset
+En ayant **node.js** et **python** faire `pip install apache-superset`
 
-## Code scaffolding
+***
+***
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Lancer le site
+> Si vous avez accès à un terminal bash (git-bash fonctionne) vous pourrez faire :
+> ```sh
+>  bash start.sh
+>  ```
+> Ce qui lancera tous les services nécessaires
 
-```bash
-ng generate component component-name
-```
+> Sans terminal bash, il faudra lancer un terminal pour chaques services:
+> <br>**Lancer Laravel**
+> ```sh
+> cd ./backend
+> php artisan serve
+> cd ..
+> ```
+> **Lancer Angular**
+> ```sh
+> ng serve
+> ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
+## Arreter les services
+Vous devrez faire `Ctrl + C` dans le terminal où vous avez lancé vos services.
 
-## Building
 
-To build the project run:
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

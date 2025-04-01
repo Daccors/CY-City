@@ -7,29 +7,37 @@
                     <h2> Types </h2>
                 </div>
                 <div class="right">
-                    <mat-chip-listbox>
-                        <mat-chip-option class="chip_1">Articles</mat-chip-option>
-                        <mat-chip-option class="chip_2">Utilisateurs</mat-chip-option>
-                        <mat-chip-option class="chip_3">Objets</mat-chip-option>
-                        <mat-chip-option class="chip_4">Services</mat-chip-option>
+                    <mat-chip-listbox (change)="onChipSelectionChange($event)">
+                        <mat-chip-option class="chip_1" [value]="1">Articles</mat-chip-option>
+                        <mat-chip-option class="chip_2" [value]="2">Utilisateurs</mat-chip-option>
+                        <mat-chip-option class="chip_3" [value]="3">Objets</mat-chip-option>
+                        <mat-chip-option class="chip_4" [value]="4">Services</mat-chip-option>
                     </mat-chip-listbox>
                 </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="sorTcategories">
-                <h2> Catégories </h2>
             </div>
             <mat-divider></mat-divider>
             <div class="sortInstances">
                 <h2> Instances </h2>
             </div>
+            @if (selectedChipValue == 3 || selectedChipValue == undefined) {
             <mat-divider></mat-divider>
             @for (type of objectTypes; track $index) {
-                <h2> {{type | uppercase }} </h2>
-                <mat-divider></mat-divider>
-                <div class="Instances">
+            <h2> {{type | uppercase }} </h2>
+            <mat-divider></mat-divider>
+            <div class="Instances">
                 @for (object of allObjects[type](); track object.id) {
-                    <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                }
+            </div>
+            }
+            }
+            @if (selectedChipValue == 2 || selectedChipValue == undefined) {
+            <mat-divider></mat-divider>
+            <h2> Utilisateurs </h2>
+            @if (allUsers()?.length && allLevels?.length) {}
+            <div class="Instances">
+                @for (user of allUsers(); track $index) {
+                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
                 }
             </div>
             }

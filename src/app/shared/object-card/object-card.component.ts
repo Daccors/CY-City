@@ -58,6 +58,9 @@ export class ObjectCardComponent {
 
   ngOnInit() {
     if (!this.object || !this.objectType) return;
+    if(this.authService.getUserRole()!=null){
+      this.blockFunc = false;
+    }
 
     // Chercher la configuration correspondante dans le JSON
     const config: objectInterface | undefined = objectData.find(obj => obj.ObjectType === this.objectType);
