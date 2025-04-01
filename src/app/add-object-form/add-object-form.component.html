@@ -1,0 +1,54 @@
+<div class="body">
+    <mat-card>
+        <mat-card-content>
+            <mat-stepper orientation="vertical" #stepper linear="true">
+                <mat-step label="Informations primaires" class="FirstStep">
+                    <app-dynamic-form-field (formEmit)="formValues($event)"  (nextEmit)="stepper.next()"></app-dynamic-form-field>
+                    <!--<div class="NAME">
+                        <mat-form-field>
+                            <mat-label> Nom </mat-label>
+                            <input matInput>
+                            <mat-hint> nom sur le réseau </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="IPFORM">
+                        <mat-form-field>
+                            <mat-label> Adresse IP</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select>
+                                <mat-option value="IPV4">IPV4</mat-option>
+                                <mat-option value="IPV6">IPV6</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                -->
+                </mat-step>
+                <mat-step label="Emplacement">
+                    <div class="local">
+                        <p> Emplacement séléctionner : <B>{{ displayRow }}</B> </p>
+                        <app-display-as-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"
+                            [columnNames]="columnNames" (rowClicked)="selectRow($event)"></app-display-as-table>
+                    </div>
+                    <div class="addLocalization">
+                        <p> L'emplacement n'est pas dans la liste ? </p>
+                        <button mat-flat-button class="Add" (click)="openAddLocationDIalog()"><mat-icon>add</mat-icon>
+                            Ajouter le nouvel
+                            emplacement</button>
+                    </div>
+                </mat-step>
+               <!-- <mat-step label="Informations Complémentaires">
+                    <mat-form-field class="description">
+                        <mat-label> Description </mat-label>
+                        <textarea matInput type="text"></textarea>
+                    </mat-form-field>
+                </mat-step>-->
+            </mat-stepper>
+            <div class="actionButton">
+                <button mat-stroked-button class="cancel" routerLink="/" routerLinkActive="active"> Annuler </button>
+                <button mat-button class="Add" (click)="onSubmit()"> Ajouter </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

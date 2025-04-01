@@ -28,7 +28,7 @@
     }
 }
 
-@mixin action-button-style-fab($BC : $action-button-color, $filled : 1){
+@mixin action-button-style-fab($BC : $action-button-color, $filled : 1) {
     cursor: pointer;
     transition: transform 0.1s ease-in-out;
 
@@ -82,7 +82,8 @@
 
 @mixin table {
     width: 100%;
-    border-radius: 30px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
@@ -106,8 +107,10 @@
     .mat-mdc-row:hover .mat-mdc-cell {
         border-color: currentColor;
     }
-
-    .row-is-clicked {
+    .rowClicked {
         font-weight: bold;
+        color: white;
+        background-color: grey;
     }
+
 }

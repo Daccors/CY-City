@@ -14,7 +14,6 @@ export class AuthService {
 
   constructor() {
     this.updateUserRole();
-    console.log("Reccupération du token local");
   }
 
   //BACK-END
@@ -52,7 +51,6 @@ export class AuthService {
     }
 
     // Simuler des rôles en fonction du token (normalement, on décode un JWT)
-    console.log(token);
     if (token === 'A') return 'admin';
     if (token === 'B') return 'moderator';
     if (token === 'C') return 'user';

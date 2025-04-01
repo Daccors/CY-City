@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddObjectComponent } from './add-object.component';
+import { DisplayAsTableComponent } from './display-as-table.component';
 
-describe('AddObjectComponent', () => {
-  let component: AddObjectComponent;
-  let fixture: ComponentFixture<AddObjectComponent>;
+describe('DisplayAsTableComponent', () => {
+  let component: DisplayAsTableComponent;
+  let fixture: ComponentFixture<DisplayAsTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddObjectComponent]
+      imports: [DisplayAsTableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddObjectComponent);
+    fixture = TestBed.createComponent(DisplayAsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -16,6 +16,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../services/laravel-api/user.service';
 import { SelectionListHarnessFilters } from '@angular/material/list/testing';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -25,10 +26,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-export interface newUser{
-  email:string,
-  clear_password:string, 
-  username:string
+export interface newUser {
+  email: string,
+  clear_password: string,
+  username: string
 }
 
 @Component({
@@ -49,16 +50,18 @@ export interface newUser{
   styleUrl: './sign-in-up.component.scss'
 })
 export class SignInUpComponent {
-  switchSignInSignUp : boolean = false;
+  switchSignInSignUp: boolean = false;
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', Validators.required);
 
   matcher = new MyErrorStateMatcher();
   matcherpsw = new MyErrorStateMatcher();
+  
+  imageSrc: string | ArrayBuffer | null = null;
+
 
   //Connexion
-  
   LoginObjt: any = {
     mail: '',
     password: ''
@@ -96,7 +99,28 @@ export class SignInUpComponent {
       });
   }
 
-  onRegister(): boolean{
-    return false; 
+
+  // Inscription
+  onRegister(): boolean {
+    return false;
   }
+
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imageSrc = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Veuillez sélectionner un fichier image.');
+      }
+    }
+  }
+
 }

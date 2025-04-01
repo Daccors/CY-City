@@ -29,7 +29,7 @@ class ActionFactory extends Factory
         return [
             'users_id' => \App\Models\User::inRandomOrder()->first()?->id,
             $key => $objects[$key], 
-            'action_type' => fake()->randomElement(['like', 'pin', 'consulting', 'creating', 'updating']),
+            'action_type' => fake()->randomElement(['like', 'pin', 'consulté', 'création', 'modification']),
         ];
     }
 }

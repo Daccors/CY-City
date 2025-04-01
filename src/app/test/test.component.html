@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="exportValues()">
+    <div class="grid">
+        <mat-form-field appearance="fill">
+            <mat-label>test</mat-label>
+            <mat-select matInput formControlName="test1">
+                <mat-option [value]="1">1</mat-option>
+                <mat-option [value]="2">2</mat-option>
+                <mat-option [value]="3">3</mat-option>
+                <mat-option [value]="4">4</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button (click)="exportValues()">Suivant</button>
+    </div>
+</form>
