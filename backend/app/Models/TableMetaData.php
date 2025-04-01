@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TableMetadata extends Model
+class TableMetaData extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class TableMetadata extends Model
         'atributs',
         'relevantAtt',
         'display',
-        'display_formats',
+        'displayFormats',
         'icon',
     ];
 
@@ -21,6 +21,6 @@ class TableMetadata extends Model
         'atributs' => 'array',
         'relevantAtt' => 'array',
         'display' => 'array',
-        'display_formats' => 'array',
+        'displayFormats' => 'array',
     ];
 }

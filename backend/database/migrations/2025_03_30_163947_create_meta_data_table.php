@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_metadata', function (Blueprint $table) {
+        Schema::create('table_meta_data', function (Blueprint $table) {
             $table->id();
             $table->string('ObjectType');
             $table->json('atributs');
             $table->json('relevantAtt');
             $table->json('display');
-            $table->json('display_formats')->nullable();
+            $table->json('displayFormats')->nullable();
             $table->string('icon')->nullable();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_metadata');
+        Schema::dropIfExists('table_meta_data');
     }
 };

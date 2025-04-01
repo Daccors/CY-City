@@ -27,54 +27,6 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 })->middleware('auth:sanctum');*/
 
-Route::get('/allTables', function (){
-    $result = [
-        'users' => \App\Models\User::all(),
-        'addresses' => \App\Models\Address::all(),
-        'articles' => \App\Models\Article::all(),
-        'bikes' => \App\Models\Bike::all(),
-        'deliveringDrones' => \App\Models\DeliveringDrone::all(),
-        'informationScreens' => \App\Models\InformationScreen::all(),
-        'localisations' => \App\Models\Localisation::all(),
-        'parkingSensors' => \App\Models\ParkingSensor::all(),
-        'smartBins' => \App\Models\SmartBin::all(),
-        'smartLamps' => \App\Models\SmartLamp::all(),
-    ];
-    
-    $tables = [];
-    
-        $tables = collect(\DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"))
-            ->pluck('name')
-            ->all();
-
-    $ignoreTables = [
-        'migrations', 'failed_jobs', 'password_resets', 'personal_access_tokens',
-        'users', 'actions', 'addresses', 'articles', 'bikes', 'connections', 'consults',
-        'delivering_drones', 'havings', 'information_screens', 'levels', 'localisations',
-        'modifies', 'parking_sensors', 'smart_bins', 'smart_lamps'
-    ];
-    
-    foreach ($tables as $table) {
-        if (in_array($table, $ignoreTables)){
-            continue;
-        }
-
-        $modelName = \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
-        $modelClass = "App\\Models\\{$modelName}";
-        
-        if (class_exists($modelClass)) {
-            $key = \Illuminate\Support\Str::camel($table);
-            try {
-                $result[$key] = $modelClass::all();
-            } catch (\Exception $e) {
-                $result[$key] = ["error" => "Erreur lors du chargement des données: " . $e->getMessage()];
-            }
-        }
-    }
-    
-    return $result;
-});
-
 Route::get('/allTables/objects', function (){
     $result = [
         'bikes' => \App\Models\Bike::all(),
@@ -147,9 +99,7 @@ Route::prefix('allTables')->group(function (){
         Route::get('{table}/{id}', [DynamicTableController::class, 'show']);
         Route::put('{table}/{id}', [DynamicTableController::class, 'update']);
         Route::delete('{table}/{id}', [DynamicTableController::class, 'destroy']);
-
-        
     });
 });
 
-Route::apiResource('/data', TableMetadataController::class);
+Route::apiResource('data', TableMetaDataController::class);

@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\TableMetadata;
+use App\Models\TableMetaData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
-class TableMetadataController extends Controller
+class TableMetaDataController extends Controller
 {
-    /**
-     * Récupère toutes les configurations d'affichage
-     */
     public function index(){
         return TableMetaData::all();
     }
 
     public function store(Request $request){
         $fields = $request->validate([
-            'ObjectType' => 'required|string|unique:table_metadata,ObjectType',
+            'ObjectType' => 'required|string|unique:table_meta_data,ObjectType',
             'atributs' => 'required|array',
             'relevantAtt' => 'required|array',
             'display' => 'required|array',
@@ -28,7 +25,7 @@ class TableMetadataController extends Controller
 
         
 
-        $data = TableMetadata::create($fields);
+        $data = TableMetaData::create($fields);
 
         return response()->json([
             $data,
@@ -40,21 +37,32 @@ class TableMetadataController extends Controller
         return $data;
     }
     
-    public function update(Request $request, $id){
-
+    public function update(Request $request, $id) {
+        $data = TableMetaData::findOrFail($id);
+        
         $fields = $request->validate([
-            'ObjectType' => 'required|string|unique:table_metadata,object_type,' . $id,
-            'atributs' => 'required|array',
-            'relevantAtt' => 'required|array',
-            'display' => 'required|array',
+            'ObjectType' => 'sometimes|string|unique:table_meta_data,ObjectType,' . $id,
+            'atributs' => 'sometimes|array',
+            'relevantAtt' => 'sometimes|array',
+            'display' => 'sometimes|array',
             'displayFormats' => 'nullable|array',
             'icon' => 'nullable|string',
         ]);
-
+    
         $data->update($fields);
+        
+        return response()->json([
+            'data' => $data,
+            'message' => 'Data type updated successfully'
+        ]);
     }
-    public function destroy($id)
-    {
+    
+    public function destroy($id) {
+        $data = TableMetaData::findOrFail($id);
         $data->delete();
+        
+        return response()->json([
+            'message' => 'Data type deleted successfully'
+        ]);
     }
 }
