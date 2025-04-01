@@ -2,24 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:8000/api'
   private token: string | null = null;
   private userRoleSubject = new BehaviorSubject<string | null>(null);
-  //constructor(private http: HttpClient) { }
-
-
-  constructor() {
+  
+  constructor(private http: HttpClient) {
     this.updateUserRole();
   }
 
   //BACK-END
-  //return this.http.post<{ token: string }>('/api/login', { email, password, rememberMe })
-  login(email: string, password: string, rememberMe: boolean): Observable<{ token: string } | null> {
-    return this.testlogin(email, password).pipe(
+  //return this.http.post<{ token: string }>('/api/loginany', { email, password, rememberMe })
+  login(email: string, password: string, rememberMe: boolean): any /*Observable<{ token: string } | null>*/ {
+    return this.http.post<any>(this.apiUrl, { email, password, rememberMe });
+    /*return this.testlogin(email, password).pipe(
       tap(response => {
         if (response) {
           this.token = response.token;
@@ -31,6 +30,7 @@ export class AuthService {
         this.updateUserRole();
       })
     );
+   */
   }
 
   getToken(): string | null {
@@ -61,7 +61,7 @@ export class AuthService {
   logout() {
     this.token = null;
     localStorage.removeItem('token');
-    this.userRoleSubject.next(null); 
+    this.userRoleSubject.next(null);
   }
 
   private updateUserRole() {

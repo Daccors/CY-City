@@ -1,5 +1,21 @@
+@use '../../styles/colors.scss' as * ;
+@use '../../styles/mixins.scss' as *;
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
     gap: 10px;
+}
+
+.action-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    button{
+        @include action-button-style($action-button-color);
+    }
+
+    button:hover{
+        transform: translateY(-2px);
+    }
 }

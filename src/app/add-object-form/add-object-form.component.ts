@@ -16,6 +16,15 @@ import { DisplayAsTableComponent } from '../shared/display-as-table/display-as-t
 import { MatIcon } from '@angular/material/icon';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  MAT_SNACK_BAR_DATA,
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-add-object-form',
@@ -31,7 +40,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatIcon,
     DynamicFormFieldComponent,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatDividerModule
   ],
   templateUrl: './add-object-form.component.html',
   styleUrl: './add-object-form.component.scss',
@@ -51,6 +61,8 @@ export class AddObjectFormComponent {
   selectedRow: any = null;
   displayRow: String = '';
 
+  private _snackBar = inject(MatSnackBar);
+  
   ngOnInit() {
     this.LocalisationInformations.getObjects('localisation')
       .subscribe((locations) => { this.dataSource.data = locations as InstancesInterfaces.localisation[]; }); // Les données sont mises à jour directement dans le signal
@@ -75,6 +87,7 @@ export class AddObjectFormComponent {
 
     this.ObjectAddService.addObject(this.currentObject.type as keyof InstancesInterfaces.ObjectTypes, newObject).subscribe((response) => {
       console.log(response);
+      this.openSnackBar(this.currentObject.values['id'], this.currentObject.type);
     });
   }
 
@@ -87,4 +100,31 @@ export class AddObjectFormComponent {
     const dialogRef = this.dialog.open(AddLocationDialogComponent, {});
     dialogRef.afterClosed().subscribe();
   }
+
+  openSnackBar(ObjectID: number, type: string) {
+    this._snackBar.openFromComponent(InformationsBarComponent, {
+      duration: 3 * 1000,
+      data: { ObjectID, type }
+    });
+  }
+}
+
+
+@Component({
+  selector: 'informations_bar',
+  template: `
+  <span matSnackBarLabel>
+  Objet {{data.type}} ajouter avec l'ID : {{data.ObjectID}}
+</span>
+  `,
+  styles: `
+    :host {
+      display: flex;
+    }
+  `,
+  imports: [MatButtonModule, MatSnackBarLabel],
+})
+export class InformationsBarComponent {
+  snackBarRef = inject(MatSnackBarRef);
+  data = inject(MAT_SNACK_BAR_DATA);
 }
