@@ -20,12 +20,15 @@ use App\Http\Controllers\Api\CreateTableController;
 use App\Http\Controllers\Api\DynamicTableController;
 use App\Http\Controllers\Api\TableMetaDataController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*Route::get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');*/
+})->middleware('auth:sanctum');
+
+Route::post('login', [LoginController::class, 'login']);
 
 Route::get('/allTables/objects', function (){
     $result = [
