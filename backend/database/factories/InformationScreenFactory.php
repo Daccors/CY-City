@@ -18,8 +18,8 @@ class InformationScreenFactory extends Factory
     {
         return [
             'localisations_id' => \App\Models\Localisation::factory(),
-            'type_of_content' => fake()->randomElement(['news', 'weather', 'traffic', 'events', 'ads']),
-            'stat' => fake()->randomElement(['on', 'off', 'updating']),
+            'type_of_content' => fake()->randomElement(['nouvelle', 'météo', 'traffic', 'événement', 'pub']),
+            'stat' => fake()->randomElement(['allumé', 'éteint', 'mise à jour']),
             'last_content_update' => fake()->dateTimeBetween('-30 days', 'now')->format('Y-m-d'),
         ];
     }
