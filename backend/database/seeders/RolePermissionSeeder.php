@@ -19,9 +19,17 @@ class RolePermissionSeeder extends Seeder
     $complexe = Role::create(['name' => 'complexe']);
 
     // Création des permissions
-    $editArticles = Permission::create(['name' => 'edit-articles']);
+    $editProfil = Permission::create(['name' => 'edit-profil']);
+    $connexion = Permission::create(['name' => 'connexion']);
+    $editObject = Permission::create(['name' => 'edit-Object']);
+
     
     // Attribution des permissions aux rôles
-    $admin->givePermissionTo($editArticles);
+    $simple->givePermissionTo($connexion);
+    $simple->givePermissionTo($editProfil);
+    $complexe->givePermissionTo($connexion);
+    $complexe->givePermissionTo($editProfil);
+    $complexe->givePermissionTo($editObject);
+
     }
 }
