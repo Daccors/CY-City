@@ -26,7 +26,7 @@ class DeliveringDroneFactory extends Factory
         return [
             'addresses_id' => \App\Models\Address::factory(),
             'localisations_id' => \App\Models\Localisation::factory(),
-            'stat' => fake()->randomElement(['on', 'off', 'updating']),
+            'stat' => fake()->randomElement(['allumé', 'éteint', 'mise à jour']),
             'batterie' => fake()->randomFloat(2, 0, 100),
             'capacity' => fake()->randomFloat(2, 0, 9.99),
             'departure' => $departure,

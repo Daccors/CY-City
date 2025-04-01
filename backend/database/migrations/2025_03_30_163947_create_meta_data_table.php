@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('smartbins', function (Blueprint $table) {
+        Schema::create('table_meta_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('localisations_id')->constrained('localisations');
-            $table->float('capacity', 5, 2);
-            $table->boolean('opened')->default(false);
-            $table->date('last_collection');
-            $table->enum('stat', ['allumé', 'éteint', 'mise à jour']);
+            $table->string('ObjectType');
+            $table->json('atributs');
+            $table->json('relevantAtt');
+            $table->json('display');
+            $table->json('displayFormats')->nullable();
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('smartbins');
+        Schema::dropIfExists('table_meta_data');
     }
 };

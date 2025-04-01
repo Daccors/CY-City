@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('parking_sensors_id')->on('parking_sensors')->nullable();
             $table->foreignId('smart_lamp_id')->on('smart_lamps')->nullable();
             $table->foreignId('bike_id')->on('bikes')->nullable();
-            $table->enum('action_type', ['like', 'pin', 'consulting', 'creating', 'updating']);
+            $table->enum('action_type', ['like', 'pin', 'consulté', 'création', 'modification']);
             $table->timestamps();
         });
     }
