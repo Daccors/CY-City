@@ -43,4 +43,4 @@ start_angular(){
 start_laravel & 
 sleep 3
 start_angular &
-sleep 10
+sleep 15
