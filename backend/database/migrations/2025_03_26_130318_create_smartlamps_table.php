@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('smartlamps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('localisations_id')->constrained('localisations');
-            $table->enum('stat', ['on', 'off', 'updating']);
+            $table->enum('stat', ['allumé', 'éteint', 'mise à jour']);
             $table->float('intensity', 5, 2);
             $table->float('battery', 5, 2);
             $table->boolean('presence')->default(false);

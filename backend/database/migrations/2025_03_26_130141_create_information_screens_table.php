@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('information_screens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('localisations_id')->constrained('localisations');
-            $table->enum('type_of_content', ['news', 'weather', 'traffic', 'events', 'ads']);
-            $table->enum('stat', ['on', 'off', 'updating']);
+            $table->enum('type_of_content', ['nouvelle', 'météo', 'traffic', 'événement', 'pub']);
+            $table->enum('stat', ['allumé', 'éteint', 'mise à jour']);
             $table->date('last_content_update');
             $table->timestamps();
         });
