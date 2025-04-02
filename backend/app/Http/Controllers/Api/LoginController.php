@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Token;
 
 class LoginController extends Controller
 {
@@ -29,7 +30,7 @@ class LoginController extends Controller
                 'user_id' => $user->id,
                 'token' => $tokenString
             ]);
-            
+
             return response()->json(['token' => 'A'], 200);
         }
         else{
