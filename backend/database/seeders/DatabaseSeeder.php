@@ -16,6 +16,8 @@ use App\Models\Connection;
 use App\Models\Consult;
 use App\Models\Having;
 use App\Models\Modify;
+use App\Models\Role;
+use App\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,5 +51,24 @@ class DatabaseSeeder extends Seeder
         }
 
         $actions = Action::factory()->count(50)->create();
+        
+        // Créer les rôles
+        $adminRole = Role::create(['name' => 'admin']);
+        $simpleRole = Role::create(['name' => 'simple']);
+        $complexeRole = Role::create(['name' => 'complexe']);
+        $visiteurRole = Role::create(['name' => 'visiteur']);
+
+        // Créer les permissions
+        $editProfil = Permission::create(['name' => 'edit-profil']);
+        $article = Permission::create(['name' => 'article']);
+        $editObject = Permission::create(['name' => 'edit-Object']);
+        $Profil = Permission::create(['name' => 'Profil']);
+        $Object = Permission::create(['name' => 'Object']);
+
+        // Associer les permissions aux rôles
+        $adminRole->permissions()->attach([$editProfil->id, $article->id, $editObject->id, $Profil->id, $Object->id]);
+        $simpleRole->permissions()->attach([$editProfil->id, $article->id, $Profil->id, $Object->id]);
+        $complexeRole->permissions()->attach([$editProfil->id, $article->id, $editObject->id, $Profil->id, $Object->id]);
+        $visiteurRole->permissions()->attach([$article->id]);
     }
 }
