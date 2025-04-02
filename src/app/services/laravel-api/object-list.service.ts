@@ -9,7 +9,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class ObjectListService {
   public objTypes: (keyof InstancesInterfaces.ObjectTypes)[] = ['drone', 'bike', 'screen', 'bin', 'lamp', 'parking'];
-  private apiUrl = 'http://127.0.0.1:8000/api/allTables/objects';
+  private apiUrl = 'http://127.0.0.1:8000/api';
   private objectsMap = new Map<keyof InstancesInterfaces.ObjectTypes, {
     all: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes][]>;
     unique: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes] | null>;

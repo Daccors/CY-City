@@ -1,6 +1,5 @@
 @use '../styles/colors' as *;
 @use '../styles/mixins' as *;
-@use '@angular/material' as mat;
 
 .body {
     @include body;
@@ -10,47 +9,39 @@
     justify-content: center;
 }
 
-.signUp,
-.signIn {
-    flex: 1;
-    display: flex;
-    flex-direction: column; 
+.signUp, .signIn {
     width: 50%;
-    gap: 10px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    flex: 1; // Permet de donner une largeur égale aux deux
     align-items: center;
-    button {
+    text-align: center;
+    min-width: max-content;
+    button{
         @include action-button-style($primary-color);
-    }
-
-    @include mat.progress-spinner-overrides((
-        size: small,
-      ));
-
-    button:disabled{
-        @include action-button-style(grey);
-    }
-}
-
-.signInForm {
-    margin: 10px;
-    mat-form-field {
-        width: 100%;
     }
 }
 
 mat-card {
+    display: inline-block;
+    flex-direction: row;
     overflow: hidden;
+    align-items: stretch;
+    position: relative;
 }
 
-.backContainer {
-    padding: 0 2vw;
+.backContainer{
+    padding-left: 2vw;
+    padding-right: 2vh;
     margin: 2vh;
-    gap: 10px;
+    gap: 10vw;
     display: flex;
     flex-direction: row;
 }
 
-.frontContainer {
+.frontContainer{
     position: absolute;
     z-index: 2;
     background-color: $primary-color;
@@ -67,13 +58,16 @@ mat-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    button {
-        @include action-button-style(white, 0);
+    button{
+        @include action-button-style(white,0);
     }
 }
 
-.frontContainer.Left {
+input{
+    width: 100%;
+}
+
+.frontContainer.Left{
     transform: translateX(-50%);
 }
 
@@ -85,9 +79,25 @@ h3 {
     @include page-header;
 }
 
-.row {
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #ccc;
+}
+
+.profile-picture img {
     width: 100%;
-    gap: 10px;
+    height: 100%;
+    object-fit: cover;
+}
+
+input[type="file"] {
+    display: none;
 }

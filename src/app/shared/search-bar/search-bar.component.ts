@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DeviceDetectorService } from '../../services/device-detector.service';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -10,7 +10,6 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormControl } from '@angular/forms';
-import { ComponentResourceCollector } from '@angular/cdk/schematics';
 
 @Component({
   selector: 'app-search-bar',
@@ -33,7 +32,6 @@ export class SearchBarComponent {
   open: boolean = false;
   distance = new FormControl(0);
 
-
   constructor(private deviceDetectorService: DeviceDetectorService) {
     this.distance.valueChanges.subscribe();
   }
@@ -41,12 +39,5 @@ export class SearchBarComponent {
   ngOnInit(): void {
     // Récupérer le type d'appareil au moment du chargement du composant
     this.deviceType = this.deviceDetectorService.getDeviceType();
-  }
-
-  @Output() searchChange = new EventEmitter<string>();
-
-  onInputChange(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value;
-    this.searchChange.emit(inputValue);
   }
 }

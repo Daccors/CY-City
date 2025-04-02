@@ -7,12 +7,11 @@ import { ObjectListService } from '../services/laravel-api/object-list.service';
 import { ObjectCardComponent } from '../shared/object-card/object-card.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import objectData from '../../../public/FakeTable.json';
-import { articles, level, ObjectTypes, users } from '../shared/InstancesInterfaces';
+import { level, ObjectTypes, user } from '../shared/InstancesInterfaces';
 import { UpperCasePipe } from '@angular/common';
 import { InformationsControlerService } from '../services/laravel-api/informations-controler.service';
 import { UserCardComponent } from '../shared/user-card/user-card.component';
-import { ArticleCardComponent } from '../shared/article-card/article-card.component';
-import { SearchService } from '../services/laravel-api/search.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -25,7 +24,6 @@ import { SearchService } from '../services/laravel-api/search.service';
     MatExpansionModule,
     UpperCasePipe,
     UserCardComponent,
-    ArticleCardComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
@@ -36,14 +34,8 @@ export class SearchComponent {
   objectTypes: string[] = [];
 
   private InformationsList = inject(InformationsControlerService);
-  allUsers: WritableSignal<users[]>;
+  allUsers: WritableSignal<user[]>;
   allLevels: WritableSignal<level[]>;
-  allArticles: WritableSignal<articles[]>;
-
-  private SearchList = inject(SearchService);
-  searchResults: Record<string, any[]>;
-  keyCount: number;
-  currentSearch: string;
 
   ngOnInit() {
     objectData.forEach(obj => {
@@ -53,19 +45,14 @@ export class SearchComponent {
         this.allObjects[type].set(data); // Remplit le signal avec les données reçues
       });
 
-      this.allUsers = this.InformationsList.getAllObjects('users') as WritableSignal<users[]>;
-      this.InformationsList.getObjects('users').subscribe((data) => {
-        this.allUsers.set(data as users[]);
+      this.allUsers = this.InformationsList.getAllObjects('user') as WritableSignal<user[]>;
+      this.InformationsList.getObjects('user').subscribe((data) => {
+        this.allUsers.set(data as user[]);
       });
 
       this.allLevels = this.InformationsList.getAllObjects('level') as WritableSignal<level[]>;
       this.InformationsList.getObjects('level').subscribe((data) => {
         this.allLevels.set(data as level[]);
-      });
-
-      this.allArticles = this.InformationsList.getAllObjects('articles') as WritableSignal<articles[]>;
-      this.InformationsList.getObjects('articles').subscribe((data) => {
-        this.allArticles.set(data as articles[]);
       });
 
     });
@@ -76,35 +63,6 @@ export class SearchComponent {
   selectedChipValue: number | null = null;
 
   onChipSelectionChange(event: MatChipListboxChange) {
-    this.selectedChipValue = event.value;
-  }
-
-  searchObjects: Record<string, WritableSignal<any[]>>;
-  searchObjectsTypes: string[] = [];
-  searchUsers: users[];
-  searchArticles: articles[];
-
-  onSearchChange(value: string) {
-    this.currentSearch = value;
-    this.SearchList.getObjects(value).subscribe({
-      next: (data) => {
-        this.searchResults = data;
-        this.keyCount = Object.keys(this.searchResults).length;
-        this.searchUsers = this.searchResults['users'] as users[];
-        this.searchArticles = this.searchResults['articles'] as articles[];
-        
-        delete this.searchResults['users'];
-        delete this.searchResults['articles'];
-
-        Object.keys(this.searchResults).forEach(key => {
-          const type = key as keyof ObjectTypes;
-          this.searchObjects[type].set(this.searchResults[key]);
-        });
-        this.searchObjectsTypes = Object.keys(this.searchObjects);
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des résultats :', error);
-      }
-    });
+    this.selectedChipValue = event.value; // Récupère la valeur sélectionnée
   }
 }

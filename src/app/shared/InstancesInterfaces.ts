@@ -116,7 +116,7 @@ export interface action {
     updated_at: Date;
 }
 
-export interface users{
+export interface user {
     id: number;
     username: string;
     photo: string | null;
@@ -139,37 +139,14 @@ export interface objectInterface {
     icon: string;
 }
 
-export interface articles {
-    id: number,
-    title: string,
-    photo: string,
-    author: string,
-    description: string,
-    content: string,
-    keyword: string,
-    created_at: Date,
-    updated_at: Date,
-}
-
 //DYNAMICS FUNCTIONS
-export interface ObjectTypes {
+export type ObjectTypes = {
     drone: drone;
     bike: bike;
     lamp: lamp;
     screen: publicScreen;
     parking: parking;
     bin: bin;
-};
-
-export type AllTypes = {
-    drone: drone;
-    bike: bike;
-    lamp: lamp;
-    screen: publicScreen;
-    parking: parking;
-    bin: bin;
-    user: users,
-    articles: articles
 };
 
 export const metadata2 = {
