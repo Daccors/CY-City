@@ -1,10 +1,34 @@
 <mat-card>
     <mat-card-content>
-        <h3 class="title"> {{ type }} ID:{{id}} </h3>
+        <h2> {{ type | uppercase }} ID:{{id}} </h2>
         <div clas="informations">
+            <form [formGroup]="form">
             @for (key of objectKey; track $index) {
+            <div class="row">
+                @if (!obejctKeyModify[key]) {
+                @if (key == 'created_at' || key == 'updated_at') {
+                <p> {{ key }} : {{ object[key] | date:'d/MM/yy hh:mm' }} </p>
+                }
+                @else {
                 <p> {{ key }} : {{ object[key] }} </p>
+                }
+                @if (!(key == 'created_at' || key == 'updated_at' || key == 'id')) {
+                <button mat-icon-button
+                    (click)="obejctKeyModify[key]=!obejctKeyModify[key]"><mat-icon>edit</mat-icon></button>
+                }
+            }@else {
+                @if (!(key == 'created_at' || key == 'updated_at' || key == 'id')) {
+                <mat-form-field>
+                    <mat-label> {{key}} </mat-label>
+                    <input matInput placeholder="{{object[key]}}" [formControlName]="key">
+                </mat-form-field>
+                <button mat-icon-button (click)="obejctKeyModify[key]=!obejctKeyModify[key]"><mat-icon>cancel</mat-icon></button>
+                <button mat-icon-button (click)="changeValue(); obejctKeyModify[key]=!obejctKeyModify[key]"><mat-icon>check</mat-icon></button>
             }
+            }
+            </div>
+            }
+        </form>
         </div>
     </mat-card-content>
 </mat-card>

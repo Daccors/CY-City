@@ -16,7 +16,6 @@ export class AuthService {
   }
 
   public register(proviedData: any) {
-    console.log(proviedData);
     return this.http.post(this.apiUrl, proviedData).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(() => error);

@@ -1,3 +1,6 @@
+@use '../../styles/mixins.scss' as * ;
+@use '../../styles/colors.scss' as *;
+
 mat-card {
     width: 100%;
     height: fit-content;
@@ -7,6 +10,26 @@ mat-card {
         width: 100%;
         height: 100%;
         display: flex;
+
         flex-direction: column;
     }
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+}
+
+h2 {
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    background-color: $object-color;
+    font-size: 7vh;
+    color: white;
 }
