@@ -93,8 +93,8 @@ Route::prefix('allTables')->group(function (){
         Route::apiResource('drone', DeliveringDroneController::class);
         Route::apiResource('screen', InformationScreenController::class);
         Route::apiResource('parking', ParkingSensorController::class);
-        Route::apiResource('bin', SmartBinController::class);
-        Route::apiResource('lamp', SmartLampController::class);
+        Route::apiResource('bin', SmartBinController::class, ['parameters' => ['bin' => 'smartBin']]);
+        Route::apiResource('lamp', SmartLampController::class, ['parameters' => ['lamp' => 'smartLamp']]);
         
         Route::post('createTable', [CreateTableController::class, 'createTable']);
 
