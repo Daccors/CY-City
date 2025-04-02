@@ -1,0 +1,51 @@
+<div class="sidnav-content" [ngClass]="isMobile ? 'mobile' : 'desktop'">
+    @if(isMobile){
+    <div class="top">
+        @if(userRole != null){
+        <button mat-raised-button routerLink="my-account" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>account_circle</mat-icon> Mon compte </button>
+        }
+        @else {
+        <button mat-raised-button routerLink="/sign_in_up" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>account_circle</mat-icon> Mon compte </button>
+        }
+        <button mat-raised-button routerLink="/" routerLinkActive="active" class="home-button"
+            (click)="onButtonClicked()"><mat-icon>home</mat-icon>Acceuil</button>
+        @if (userRole != null) {
+        <button mat-raised-button routerLink="/add_object" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>settings</mat-icon>Page
+            Test objet</button>
+        }
+        @if (userRole != null) {
+        <button mat-raised-button routerLink="/Mailbox" routerLinkActive="active"
+            (click)="onButtonClicked()"><mat-icon>notifications</mat-icon> Notifications </button>
+        }
+    </div>
+    <div class="bottom">
+        <button mat-raised-button routerLink="/" routerLinkActive="active" (click)="logout()"
+            class="logout"><mat-icon>logout</mat-icon> Déconnexion </button>
+    </div>
+    }
+    @else {
+    <div class="top">
+        @if(userRole != null){
+        <button mat-fab routerLink="my-account" routerLinkActive="active" matTooltip="Mon Compte">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        }@else{
+        <button mat-fab routerLink="/sign_in_up" routerLinkActive="active" matTooltip="Se connecter"><mat-icon>account_circle</mat-icon></button>
+        }
+        <button mat-fab routerLink="/" routerLinkActive="active" class="home-button" matTooltip="Acceuil"><mat-icon>home</mat-icon></button>
+        @if (userRole != null) {
+        <button mat-fab routerLink="/add_object" routerLinkActive="active" matTooltip="Page de test des objets"><mat-icon>settings</mat-icon></button>
+        <button mat-fab routerLink="/Mailbox" routerLinkActive="active" matTooltip="Notifications"><mat-icon>notifications</mat-icon></button>
+        }
+        <button mat-fab routerLink="/search" routerLinkActive="active" matTooltip="Recherche"><mat-icon>search</mat-icon></button>
+    </div>
+    <div class="bottom">
+        @if(userRole != null){
+        <button mat-fab routerLink="/" routerLinkActive="active" (click)="logout()" class="logout" matTooltip="Se déconnecter"><mat-icon>logout</mat-icon></button>
+        }
+    </div>
+    }
+</div>

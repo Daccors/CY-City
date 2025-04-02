@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Ajout d'une nouvelle localisation</h2>
+<mat-dialog-content>
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Longitude</mat-label>
+            <input matInput [(ngModel)]="Longitude" placeholder="-90.5542" [formControl]="acceptedType" (blur)="updateErrorMessage()" required>
+            @if (acceptedType.invalid) {
+            <mat-error>{{errorMessage()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label> Latitude </mat-label>
+            <input matInput [(ngModel)]="Latitude" placeholder="152.25887200" [formControl]="acceptedType" (blur)="updateErrorMessage()"
+                required>
+            @if (acceptedType.invalid) {
+            <mat-error>{{errorMessage()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="row">
+    <button mat-stroked-button (click)="onNoClick()" class="cancel-button"><mat-icon>cancel</mat-icon>Annuler</button>
+    <button mat-stroked-button (click)="onConfirm()" class="confirm-button">Confirmer</button>
+</mat-dialog-actions>

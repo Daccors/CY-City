@@ -1,0 +1,71 @@
+@use '../styles/colors' as *;
+@use '../styles/mixins' as *;
+@use '@angular/material' as mat;
+
+.body {
+    @include body;
+}
+
+.Instances {
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+    gap: 10px;
+}
+
+mat-card {
+    width: 100%;
+    height: auto;
+    min-height: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+mat-card-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    .sortType {
+        display: flex;
+        flex-direction: row;
+
+        .left,
+        .right {
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .left {
+            flex-direction: flex-start;
+        }
+
+        .right {
+            justify-content: flex-end;
+        }
+        
+        @include  mat.chips-overrides((
+            outline-color: transparent,
+        ));
+
+        .chip {
+            &_1 {
+                background-color: $article-color;
+            }
+
+            &_2 {
+                background-color: $user-color;
+            }
+
+            &_3 {
+                background-color: $object-color;
+            }
+
+            &_4 {
+                background-color: $service-color;
+            }
+        }
+    }
+}

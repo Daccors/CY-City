@@ -1,0 +1,32 @@
+@use './styles/mixins.scss' as *;
+@use './styles/colors.scss' as *;
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0);
+  }
+  
+.sidenav {
+    padding: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction:inherit;
+    width: auto;
+    overflow: hidden;
+    background-color: $primary-color;
+}
+
+.sidenavButton {
+  z-index: 999999;
+  position: fixed;
+}
+
+.drawerButton{
+  background-color: $action-button-color; 
+}
+
+.drawerButton mat-icon {
+  @include icon-in-button-fab;
+}

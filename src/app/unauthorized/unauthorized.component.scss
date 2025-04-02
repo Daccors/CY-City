@@ -1,0 +1,27 @@
+.body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h1 {
+    text-align: center;
+    background-color: red;
+    border-radius: 30px;
+    color: white;
+    line-height: 70px;
+}
+
+mat-card-title {
+    text-align: left;
+    padding: 5px;
+}
+.description {
+    text-align: justify;
+}
+
+a {
+    color: grey;
+    text-decoration: underline;
+}

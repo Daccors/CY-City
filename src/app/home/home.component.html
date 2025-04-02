@@ -1,0 +1,56 @@
+<div [ngClass]="deviceType">
+  <div class="banner">
+    <img src="laVille.png" alt="CY-City banner" width="100%" height="100%">
+  </div>
+  <div class="home-container">
+    <div class="features">
+      <div class="feature-card">
+        <!--<i class="fas fa-map-marker-alt"></i>
+        <h3>Explorez la ville</h3>
+        <p>Découvrez les lieux incontournables et les événements à ne pas manquer.</p>-->
+      </div>
+
+      <div class="feature-card">
+        <!--<i class="fas fa-store"></i>
+        <h3>Commerces locaux</h3>
+        <p>Retrouvez tous les commerces et services près de chez vous.</p>-->
+      </div>
+
+      <div class="feature-card">
+        <!--<i class="fas fa-users"></i>
+        <h3>Communauté</h3>
+        <p>Rejoignez la communauté CY City et participez à la vie locale.</p>-->
+      </div>
+    </div>
+    <div class="subContent">
+      <mat-card class="pinBoard">
+        <mat-card-title> Vos pins <mat-icon>bookmark</mat-icon></mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <mat-grid-list cols="3" rowHeight="3:2">
+            <mat-grid-tile>
+              <mat-card class="glass-effect">
+                <mat-card-content class="content">
+                  <button mat-flat-button>
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </mat-card-content>
+              </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
+      <div class="interDiv"></div>
+      <mat-card>
+        <mat-card-title> Carte des objets </mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content></mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

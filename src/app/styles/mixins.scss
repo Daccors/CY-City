@@ -1,0 +1,116 @@
+@use 'colors' as *;
+
+@mixin action-button-style($BC : $action-button-color, $filled : 1) {
+    vertical-align: middle;
+    //border: 2px solid #422800;
+    width: auto;
+    min-width: max-content;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0 18px;
+    text-align: left;
+    transition: transform 0.1s ease-in-out;
+    justify-content: flex-start;
+    gap: 2px;
+    text-decoration: solid;
+
+    @if($filled ==1) {
+        color: white !important;
+        background-color: $BC !important;
+    }
+
+    @else {
+        color: $BC !important;
+        background-color: transparent;
+        border: 2px solid $BC;
+    }
+}
+
+@mixin action-button-style-fab($BC : $action-button-color, $filled : 1) {
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+
+    @if($filled ==1) {
+        color: white !important;
+        background-color: $BC !important;
+    }
+
+    @else {
+        color: $BC !important;
+        background-color: transparent;
+        border: 2px solid $BC;
+    }
+}
+
+@mixin page-header($flex : center) {
+    color: white;
+    background-color: $primary-color;
+    border-radius: 30px;
+    font-size: 6vh;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: $flex;
+    padding: 3vh;
+
+    mat-icon {
+        flex: none;
+    }
+}
+
+@mixin icon-in-button-fab {
+    line-height: 1;
+    vertical-align: middle;
+    align-items: center;
+    color: white;
+}
+
+@mixin card {
+    border-radius: 30px !important;
+}
+
+@mixin body {
+    padding: 5px;
+    gap: 10vh 10vw;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin table {
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+
+
+    .mat-mdc-header-cell {
+        text-align: center;
+        background-color: $action-button-color !important;
+        color: white;
+    }
+
+    .mat-mdc-row .mat-mdc-cell {
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        padding: 5px;
+        cursor: pointer;
+        align-items: center;
+        text-align: center;
+    }
+
+    .mat-mdc-row:hover .mat-mdc-cell {
+        border-color: currentColor;
+    }
+    .rowClicked {
+        font-weight: bold;
+        color: white;
+        background-color: grey;
+    }
+
+}

@@ -1,0 +1,87 @@
+@use '../styles/mixins' as *;
+@use '../styles/colors.scss' as *;
+
+.sidnav-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.sidnav-content.mobile {
+  padding: 1vw;
+  .mat-mdc-raised-button mat-icon {
+    transform: scale(1.5);
+    line-height: 1;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-raised-button {
+    @include action-button-style;
+    font-size: 6vw !important;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    background-color: red !important;
+  }
+
+  div.top {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+  }
+
+  div.bottom {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: flex-end;
+    gap: 2vh;
+  }
+
+  .logout {
+    @include action-button-style(rgb(255, 0, 0))
+  }
+}
+
+.sidnav-content.desktop {
+  padding: 0.5vw;
+  display: flex;
+  flex-direction: column;
+
+  button:hover{
+    transform: translateY(-4px);
+  }
+  button.logout {
+    @include action-button-style-fab(red);
+  }
+
+  mat-icon {
+    transform: scale(1.1);
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+
+    button {
+      @include action-button-style-fab;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+}

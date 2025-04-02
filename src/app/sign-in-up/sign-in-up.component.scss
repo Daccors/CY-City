@@ -1,0 +1,93 @@
+@use '../styles/colors' as *;
+@use '../styles/mixins' as *;
+@use '@angular/material' as mat;
+
+.body {
+    @include body;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+.signUp,
+.signIn {
+    flex: 1;
+    display: flex;
+    flex-direction: column; 
+    width: 50%;
+    gap: 10px;
+    align-items: center;
+    button {
+        @include action-button-style($primary-color);
+    }
+
+    @include mat.progress-spinner-overrides((
+        size: small,
+      ));
+
+    button:disabled{
+        @include action-button-style(grey);
+    }
+}
+
+.signInForm {
+    margin: 10px;
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+mat-card {
+    overflow: hidden;
+}
+
+.backContainer {
+    padding: 0 2vw;
+    margin: 2vh;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.frontContainer {
+    position: absolute;
+    z-index: 2;
+    background-color: $primary-color;
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 100%;
+    gap: 4vh;
+    font-size: 150%;
+    transition: transform 0.5s ease-in-out;
+    color: white;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+        @include action-button-style(white, 0);
+    }
+}
+
+.frontContainer.Left {
+    transform: translateX(-50%);
+}
+
+.frontContainer.Right {
+    transform: translateX(50%);
+}
+
+h3 {
+    @include page-header;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+}
