@@ -14,6 +14,22 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)){
             $user = Auth::user();
             //$token = $user->createToken('NomDuToken')->plainTextToken;
+
+            $existingToken = Token::where('user_id', $user->id)->first();
+
+            if ($existingToken) {
+                return response()->json(['token' => $existingToken->token], 200);
+            }
+
+            // Générer un nouveau token
+            $tokenString = Str::random(60);
+
+            // Sauvegarder le token en base de données
+            Token::create([
+                'user_id' => $user->id,
+                'token' => $tokenString
+            ]);
+            
             return response()->json(['token' => 'A'], 200);
         }
         else{
