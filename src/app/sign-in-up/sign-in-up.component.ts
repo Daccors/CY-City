@@ -117,7 +117,8 @@ export class SignInUpComponent {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          // Gérer l'erreur de connexion
+
+
           console.error(err);
         }
       });
