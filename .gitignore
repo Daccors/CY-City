@@ -43,4 +43,6 @@ testem.log
 Thumbs.db
 
 # autre
-
+/vendor/
+/node_modules/
+.env
