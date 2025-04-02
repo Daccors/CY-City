@@ -84,20 +84,23 @@
                             *ngIf="register.get('ConfirmPassword').hasError('required') && register.get('ConfirmPassword').touched">
                             Veuillez confirmer le mot de passe.
                         </mat-error>
-                        <mat-error *ngIf="register.errors?.['passwordMismatch']&& register.get('ConfirmPassword').touched">
+                        <mat-error
+                            *ngIf="register.errors?.['passwordMismatch']&& register.get('ConfirmPassword').touched">
                             La confirmation ne correspond pas au mot de passe.
                         </mat-error>
                     </mat-form-field>
-                    <mat-checkbox matInput formControlName="acceptConditions"> Accepter les conditions d'utilisation
-                    </mat-checkbox>
-                    <button mat-stroked-button (click)="onRegister()" [disabled]="!register.valid||postSignUp">
-                        @if (postSignUp) {
-                            <mat-spinner></mat-spinner>
-                        }
-                        @else{
-                        S'inscrire
-                        }
-                    </button>
+                    <div class="column">
+                        <mat-checkbox matInput formControlName="acceptConditions"> Accepter les conditions d'utilisation
+                        </mat-checkbox>
+                        <button mat-stroked-button (click)="onRegister()" [disabled]="!register.valid||postSignUp">
+                            @if (postSignUp) {
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                            }
+                            @else{
+                            S'inscrire
+                            }
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

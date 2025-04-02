@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +12,8 @@ import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { InformationsControlerService } from '../services/laravel-api/informations-controler.service';
+import { users } from '../shared/InstancesInterfaces';
 
 export interface UserInfo {
   email: string;
@@ -48,10 +50,11 @@ export class MyAccountComponent {
   imageSrc: string | ArrayBuffer | null = null;
   isDisabled = true;
   DataEditing = {name : false, lastName: false, email: false, birthdate:false, gender:false, pseudo:false}
-  ngOnInit() {
-    //BACK-END
-    /* Requête pour aller chercher les données utilisateurs et les assignées*/
 
+  private userService= inject(InformationsControlerService);
+  user:  users;
+
+  ngOnInit() {
   }
 
   onFileSelected(event: Event) {

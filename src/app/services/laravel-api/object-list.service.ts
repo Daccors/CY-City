@@ -2,7 +2,6 @@ import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable, tap } from 'rxjs';
 import * as InstancesInterfaces from '../../shared/InstancesInterfaces';
-import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -74,18 +73,18 @@ export class ObjectListService {
       })
     );
   }
+
   async getFirstAvailableIndex<T extends keyof InstancesInterfaces.ObjectTypes>(type: T): Promise<number> {
-    const response = await firstValueFrom(this.getObjects(type));
     this.registerObjectType(type); // Enregistre l'objet
     const objects = this.objectsMap.get(type)?.all() ?? [];
 
     return objects.length + 1;
   }
 
+  modifyObject<T extends keyof InstancesInterfaces.ObjectTypes>(object: InstancesInterfaces.ObjectTypes[T], type: T,  id: number) {
+    console.log(object);
+    return this.http.put(`${this.apiUrl}/${type}/${id}`, JSON.stringify(object)).subscribe((response) => {
+      console.log(response);
+    });
+  }
 }
-
-/*this.objectListService.getObjects('drone', 'http://127.0.0.1:8000/api/drone').subscribe();
-this.objectListService.getObjects('bike', 'http://127.0.0.1:8000/api/bike').subscribe();
-const drones = this.objectListService.objectsMap.get('drone')!.all();
-const uniqueDrone = this.objectListService.objectsMap.get('drone')!.unique();
-*/

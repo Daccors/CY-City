@@ -18,7 +18,7 @@
             @if (keyCount == 0 && currentSearch != '') {
             Aucun résultat trouvé pour votre recherche.
             }
-            @if(currentSearch == ''){
+            @if(currentSearch == '' || currentSearch == undefined){
             @if (selectedChipValue == 3 || selectedChipValue == undefined) {
             <mat-divider></mat-divider>
             @for (type of objectTypes; track $index) {
@@ -54,8 +54,9 @@
             }
             @else {
             @if (selectedChipValue == 3 || selectedChipValue == undefined) {
-            <mat-divider></mat-divider>
             <!--@for (type of searchObjectsTypes; track $index) {
+                        <mat-divider></mat-divider>
+
             <h2> {{type | uppercase }} </h2>
             <mat-divider></mat-divider>
             <div class="Instances">
