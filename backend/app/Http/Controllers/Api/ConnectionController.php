@@ -9,45 +9,58 @@ class ConnectionController extends Controller
 {
     public function index()
     {
-        return Connection::all();
+        try{
+            return response()->json([
+                1,
+                Connection::all()
+                ]);
+            }
+            catch(Exception $e){
+                return response()->json(0);
+            }
     }
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'user_id' => 'required|exists:users,id'
-        ]);
-
-        $connection = Connection::create($fields);
-
-        return response()->json([
-            $connection,
-            'message' => 'Connection created successfully'
-        ], 201);
+        try{
+            $fields = $request->validate([
+                'user_id' => 'required|exists:users,id'
+            ]);
+    
+            $connection = Connection::create($fields);
+    
+            return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
+        
     }
 
     public function show(Connection $connection)
     {
-        return $connection;
-    }
-
-    public function update(Request $request, Connection $connection)
-    {
-        $fields = $request->validate([
-            'user_id' => 'required|exists:users,id'
-        ]);
-
-        $connection->update($fields);
-
-        return response()->json([
-            'connection' => $connection,
-            'message' => 'Connection updated successfully'
-        ], 200);
+        try{
+            return response()->json([
+                1,
+                $connection
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function destroy(Connection $connection)
     {
-        $connection->delete();
-        return ['message' => 'Connexion supprimée'];
+        try {
+            $connection->delete();
+            return response()->json(1);
+         } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 }

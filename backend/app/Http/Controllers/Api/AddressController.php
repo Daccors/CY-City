@@ -8,43 +8,75 @@ use App\Models\Address;
 class AddressController extends Controller
 {
     public function index(){
-        return Address::all();
+        try{
+            return response()->json([
+                1,
+                Address::all()
+                ]);
+            }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function store(Request $request){
-        $fields = $request->validate([
-            'number' => 'required|string',
-            'name' => 'required|string'
-        ]);
-
-        $address = Address::create($fields);
-
-        return response()->json([
-            $address,
-            'message' => 'Address created successfully'
-        ], 201);
+        try{
+            $fields = $request->validate([
+                'number' => 'required|string',
+                'name' => 'required|string'
+            ]);
+    
+            $address = Address::create($fields);
+    
+            return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
+        
     }
 
     public function show(Address $address){
-        return $address;
+        try{
+            return response()->json([
+                1,
+                $address
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function update(Request $request, Address $address){
-        $fields = $request->validate([
-            'number' => 'sometimes|string',
-            'name' => 'sometimes|string'
-        ]);
-
-        $address->update($fields);
-
-        return response()->json([
-            'address' => $address,
-            'message' => 'Address updated successfuly'
-        ], 200);
+        try{
+            $fields = $request->validate([
+                'number' => 'sometimes|string',
+                'name' => 'sometimes|string'
+            ]);
+    
+            $address->update($fields);
+    
+            return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function destroy(Address $address){
-        $address->delete();
-        return ['message' => 'Adresse supprimée'];
+        try{
+            $address->delete();
+            return response()->json(1);
+         } 
+        catch (\Exception $e){
+            return response()->json(0);
+        }
     }
 }
