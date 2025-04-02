@@ -1,0 +1,46 @@
+<div>
+    <!-- Sélecteur de type d'objet -->
+    <mat-form-field appearance="fill">
+        <mat-label>Type d'objet</mat-label>
+        <mat-select (selectionChange)="onTypeChange($event.value)" [value]="selectedType">
+            <mat-option *ngFor="let type of objectTypes" [value]="type">
+                {{ type | titlecase }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<!-- Formulaire dynamique, s'affiche lorsque selectedType est défini -->
+<form [formGroup]="form" (ngSubmit)="exportValues()" *ngIf="selectedType">
+    <div class="grid">
+        @for (field of currentMetadata; track $index) {
+        @if (!(field.key == 'id' || field.key == 'created_at' || field.key == 'updated_at' || field.key ==
+        'localisations_id')) {
+        <mat-form-field appearance="fill">
+            <mat-label>{{ field.key | titlecase }}</mat-label>
+            <ng-container [ngSwitch]="field.type">
+                <input matInput *ngSwitchCase="'number'" type="number" [formControlName]="field.key" />
+                <input matInput *ngSwitchCase="'string'" type="text" [formControlName]="field.key" />
+                <input matInput *ngSwitchCase="'Date'" type="date" [formControlName]="field.key" />
+                <input matInput *ngSwitchCase="'boolean'" type="number" [formControlName]="field.key" />
+                <mat-select matInput *ngSwitchCase="'select'" [formControlName]="field.key">
+                    @for (options of selectList[field.key]; track $index) {
+                    <mat-option value={{options}}>{{options}}</mat-option>
+                    }
+                </mat-select>
+            </ng-container>
+
+            <mat-error *ngIf="form.get(field.key)?.hasError('required')">
+                Ce champ est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get(field.key)?.hasError('min') || form.get(field.key)?.hasError('max')">
+                Vérifiez que la valeur respecte la contrainte {{ field.constraint }}
+            </mat-error>
+        </mat-form-field>
+        }
+        }
+    </div>
+</form>
+<div class="action-button">
+<button mat-stroked-button (click)="exportValues()">Suivant</button>
+</div>

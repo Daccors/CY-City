@@ -20,8 +20,8 @@ class SmartBinFactory extends Factory
             'localisations_id' => \App\Models\Localisation::factory(),
             'capacity' => fake()->randomFloat(2, 0, 100),
             'opened' => fake()->boolean(),
-            'last_collection' => fake()->dateTimeBetween('-30 days', 'now')->format('Y-m-d'),
-            'stat' => fake()->randomElement(['on', 'off', 'updating']),
+            'last_collection' => fake()->dateTimeBetween('-30 days', 'now')->format('d-m-Y'),
+            'stat' => fake()->randomElement(['allumé', 'éteint', 'mise à jour']),
         ];
     }
 }

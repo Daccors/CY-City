@@ -1,0 +1,32 @@
+<div [ngClass]="deviceType">
+    <mat-accordion>
+        <mat-expansion-panel hideToggle class="expensionPanel" disabled="true" [expanded]="open">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <button mat-icon-button matTooltip="Afficher les filtres" (click)="open=!open">
+                        <mat-icon [class.opened]="open">expand_more</mat-icon>
+                    </button>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <div class="search-box">
+                        <button class="btn-search"><i class="fas fa-search"></i></button>
+                        <input #inputSearch type="text" class="input-search" placeholder="Rechercher" 
+                        (input)="onInputChange($event)"
+                        >
+                    </div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <h4> Distance (par rapport a votre adresse) :</h4>
+            <mat-divider></mat-divider>
+            <div class="row">
+                <mat-slider min="0" max="50" step="0.1">
+                    <input matSliderThumb>
+                </mat-slider>
+                <p>{{distance}} Km</p>
+            </div>
+            <mat-divider></mat-divider>
+            <h4> Plus de filtres </h4>
+            <mat-checkbox> Afficher seulement les favoris </mat-checkbox>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

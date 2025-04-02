@@ -9,11 +9,21 @@ class SmartLampController extends Controller
 {
     public function index()
     {
-        return SmartLamp::all();
+        try{
+            return response()->json([
+                1,
+                SmartLamp::all()
+                ]);
+            }
+            catch(Exception $e){
+                return response()->json(0);
+            }
     }
 
     public function store(Request $request)
     {
+        try{
+            
         $fields = $request->validate([
             'localisations_id' => 'required|exists:localisations,id',
             'stat' => 'required|string',
@@ -24,19 +34,33 @@ class SmartLampController extends Controller
 
         $smartLamp = SmartLamp::create($fields);
 
-        return response()->json([
-            $smartLamp,
-            'message' => 'Smart Lamp created successfully'
-        ], 201);
+        return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function show(SmartLamp $smartLamp)
     {
-        return $smartLamp;
+        try{
+            return response()->json([
+                1,
+                $smartLamp
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function update(Request $request, SmartLamp $smartLamp)
     {
+        try{
+            
         $fields = $request->validate([
             'localisations_id' => 'sometimes|exists:localisations,id',
             'stat' => 'sometimes|string',
@@ -47,15 +71,24 @@ class SmartLampController extends Controller
 
         $smartLamp->update($fields);
 
-        return response()->json([
-            'smartLamp' => $smartLamp,
-            'message' => 'Smart Lamp updated successfully'
-        ], 200);
+        return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function destroy(SmartLamp $smartLamp)
     {
-        $smartLamp->delete();
-        return ['message' => 'Lampadaire intelligent supprimé'];
+        try {
+            $smartLamp->delete();
+            return response()->json(1);
+         } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 }

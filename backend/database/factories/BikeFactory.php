@@ -20,7 +20,7 @@ class BikeFactory extends Factory
         return [
             'localisations_id' => \App\Models\Localisation::factory(),
             'brand' => fake()->randomElement(['Trek', 'Giant', 'Specialized', 'Cannondale', 'Scott']),
-            'type' => fake()->randomElement(['mountain', 'BMX', 'electric', 'cyclo-cross']),
+            'type' => fake()->randomElement(['montagne', 'BMX', 'électrique', 'cyclo-cross']),
             'availability' => fake()->boolean(70),
         ];
     }

@@ -18,7 +18,7 @@ class SmartLampFactory extends Factory
     {
         return [
             'localisations_id' => \App\Models\Localisation::factory(),
-            'stat' => fake()->randomElement(['on', 'off', 'updating']),
+            'stat' => fake()->randomElement(['allumé', 'éteint', 'mise à jour']),
             'intensity' => fake()->randomFloat(2, 0, 100),
             'battery' => fake()->randomFloat(2, 0, 100),
             'presence' => fake()->boolean(),

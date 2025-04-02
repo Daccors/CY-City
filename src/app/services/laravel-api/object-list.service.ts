@@ -1,50 +1,91 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { bike, drone } from '../../shared/InstancesInterfaces';
+import { firstValueFrom, Observable, tap } from 'rxjs';
+import * as InstancesInterfaces from '../../shared/InstancesInterfaces';
+import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObjectListService {
-  //BACK-END  
-  private dronesUrl = 'http://127.0.0.1:8000/api/drone';
-  private bikesUrl = 'http://127.0.0.1:8000/api/bike';
+  public objTypes: (keyof InstancesInterfaces.ObjectTypes)[] = ['drone', 'bike', 'screen', 'bin', 'lamp', 'parking'];
+  private apiUrl = 'http://127.0.0.1:8000/api/allTables/objects';
+  private objectsMap = new Map<keyof InstancesInterfaces.ObjectTypes, {
+    all: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes][]>;
+    unique: WritableSignal<InstancesInterfaces.ObjectTypes[keyof InstancesInterfaces.ObjectTypes] | null>;
+  }>();
 
-  drones = signal<drone[]>([]);
-  uniqueDrone = signal<drone | null>(null);
-
-  bikes = signal<bike[]>([]);
-  uniqueBike = signal<bike | null>(null);
-
-  constructor(public http: HttpClient) { }
-
-  //Drones
-  getDrones(): Observable<drone[]> {
-    return this.http.get<drone[]>(this.dronesUrl).pipe(
-      tap((drones) => { this.drones.set(drones); })
-    );
+  constructor(private http: HttpClient) {
+    this.initObjectTypes(this.objTypes);
   }
-  getDroneById(id: number): Observable<drone> {
-    return this.http.get<drone>(`${this.dronesUrl}/${id}`).pipe(
-      tap((uniqueDrone) => {
-        this.uniqueDrone.set(uniqueDrone);
+
+  private initObjectTypes(types: (keyof InstancesInterfaces.ObjectTypes)[]) {
+    types.forEach(type => {
+      this.objectsMap.set(type, {
+        all: signal<any[]>([]),
+        unique: signal<any | null>(null)
+      });
+    });
+  }
+
+  registerObjectType<T extends keyof InstancesInterfaces.ObjectTypes>(type: T) {
+    if (!this.objectsMap.has(type)) {
+      this.objectsMap.set(type, {
+        all: signal<InstancesInterfaces.ObjectTypes[T][]>([]),
+        unique: signal<InstancesInterfaces.ObjectTypes[T] | null>(null)
+      });
+    }
+  }
+
+  getObjects<T extends keyof InstancesInterfaces.ObjectTypes>(type: T): Observable<InstancesInterfaces.ObjectTypes[T][]> {
+    this.registerObjectType(type);
+
+    return this.http.get<InstancesInterfaces.ObjectTypes[T][]>(`${this.apiUrl}/${type}`).pipe(
+      tap((data) => {
+        this.objectsMap.get(type)!.all.set(data);
       })
     );
   }
 
-  //Bikes
-
-  getBikes(): Observable<bike[]> {
-    return this.http.get<bike[]>(this.bikesUrl).pipe(
-      tap((bikes) => { this.bikes.set(bikes); })
-    );
-  }
-  getBikeById(id: number): Observable<bike> {
-    return this.http.get<bike>(`${this.bikesUrl}/${id}`).pipe(
-      tap((uniqueBike) => {
-        this.uniqueBike.set(uniqueBike);
+  getObjectById<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, id: number): Observable<InstancesInterfaces.ObjectTypes[T]> {
+    this.registerObjectType(type);
+    return this.http.get<InstancesInterfaces.ObjectTypes[T]>(`${this.apiUrl}/${type}/${id}`).pipe(
+      tap((data) => {
+        this.objectsMap.get(type)!.unique.set(data);
       })
     );
   }
+
+  getAllObjects<T extends keyof InstancesInterfaces.ObjectTypes>(type: T) {
+    return this.objectsMap.get(type)?.all || signal<InstancesInterfaces.ObjectTypes[T][]>([]);
+  }
+
+  getUniqueObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T) {
+    return this.objectsMap.get(type)?.unique || signal<InstancesInterfaces.ObjectTypes[T] | null>(null);
+  }
+
+  addObject<T extends keyof InstancesInterfaces.ObjectTypes>(type: T, object: InstancesInterfaces.ObjectTypes[T]): Observable<InstancesInterfaces.ObjectTypes[T]> {
+    this.registerObjectType(type);
+
+    return this.http.post<InstancesInterfaces.ObjectTypes[T]>(`${this.apiUrl}/${type}`, object).pipe(
+      tap((data) => {
+        const currentData = this.objectsMap.get(type)!.all();
+      this.objectsMap.get(type)!.all.set([...currentData, data] as InstancesInterfaces.ObjectTypes[T][]);
+      })
+    );
+  }
+  async getFirstAvailableIndex<T extends keyof InstancesInterfaces.ObjectTypes>(type: T): Promise<number> {
+    const response = await firstValueFrom(this.getObjects(type));
+    this.registerObjectType(type); // Enregistre l'objet
+    const objects = this.objectsMap.get(type)?.all() ?? [];
+
+    return objects.length + 1;
+  }
+
 }
+
+/*this.objectListService.getObjects('drone', 'http://127.0.0.1:8000/api/drone').subscribe();
+this.objectListService.getObjects('bike', 'http://127.0.0.1:8000/api/bike').subscribe();
+const drones = this.objectListService.objectsMap.get('drone')!.all();
+const uniqueDrone = this.objectListService.objectsMap.get('drone')!.unique();
+*/

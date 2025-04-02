@@ -1,39 +1,91 @@
 <div class="body">
     <mat-card>
         <mat-card-content>
-            <app-search-bar></app-search-bar>
+            <app-search-bar (searchChange)="onSearchChange($event)"></app-search-bar>
             <div class="sortType">
                 <div class="left">
                     <h2> Types </h2>
                 </div>
                 <div class="right">
-                    <mat-chip-listbox>
-                        <mat-chip-option class="chip_1">Articles</mat-chip-option>
-                        <mat-chip-option class="chip_2">Utilisateurs</mat-chip-option>
-                        <mat-chip-option class="chip_3">Objets</mat-chip-option>
-                        <mat-chip-option class="chip_4">Services</mat-chip-option>
+                    <mat-chip-listbox (change)="onChipSelectionChange($event)">
+                        <mat-chip-option class="chip_1" [value]="1">Articles</mat-chip-option>
+                        <mat-chip-option class="chip_2" [value]="2">Utilisateurs</mat-chip-option>
+                        <mat-chip-option class="chip_3" [value]="3">Objets</mat-chip-option>
+                        <mat-chip-option class="chip_4" [value]="4">Services</mat-chip-option>
                     </mat-chip-listbox>
                 </div>
             </div>
+            @if (keyCount == 0 && currentSearch != '') {
+            Aucun résultat trouvé pour votre recherche.
+            }
+            @if(currentSearch == ''){
+            @if (selectedChipValue == 3 || selectedChipValue == undefined) {
             <mat-divider></mat-divider>
-            <div class="sorTcategories">
-                <h2> Catégories </h2>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="sortInstances">
-                <h2> Instances </h2>
-            </div>
+            @for (type of objectTypes; track $index) {
+            <h2> {{type | uppercase }} </h2>
             <mat-divider></mat-divider>
             <div class="Instances">
-                @for (drone of drones(); track drone.id) {
-                <app-object-card [object]="drone"></app-object-card>
+                @for (object of allObjects[type](); track object.id) {
+                <app-object-card [object]="object" [objectType]="type"></app-object-card>
                 }
-              <!--  @for (bike of bikes(); track bike.id){
-                    <app-object-card [object]="bike"></app-object-card>
-                }-->
             </div>
-            <p>Search by id</p>
-            <app-object-card [object]="UniqueDrone()"></app-object-card>
+            }
+            }
+            @if (selectedChipValue == 2 || selectedChipValue == undefined) {
+            <mat-divider></mat-divider>
+            <h2> Utilisateurs </h2>
+            @if (allUsers()?.length && allLevels?.length) {}
+            <div class="Instances">
+                @for (user of allUsers(); track $index) {
+                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
+                }
+            </div>
+            }
+            @if(selectedChipValue == 1 || selectedChipValue == undefined){
+            <mat-divider></mat-divider>
+            <h2> Articles </h2>
+            @if (allArticles()?.length) {}
+            <div class="Instances">
+                @for (article of allArticles(); track $index) {
+                <app-article-card [article]="article"></app-article-card>
+                }
+            </div>
+            }
+            }
+            @else {
+            @if (selectedChipValue == 3 || selectedChipValue == undefined) {
+            <mat-divider></mat-divider>
+            <!--@for (type of searchObjectsTypes; track $index) {
+            <h2> {{type | uppercase }} </h2>
+            <mat-divider></mat-divider>
+            <div class="Instances">
+                @for (object of searchObjects[type](); track object.id) {
+                <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                }
+            </div>
+        }-->
+            @if(selectedChipValue == 2 || selectedChipValue == undefined){
+            <mat-divider></mat-divider>
+            <h2> Utilisateurs </h2>
+            @if (searchUsers?.length && allLevels?.length) {}
+            <div class="Instances">
+                @for (user of searchUsers; track $index) {
+                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
+                }
+            </div>
+            }
+            @if(selectedChipValue == 1 || selectedChipValue == undefined){
+            <mat-divider></mat-divider>
+            <h2> Articles </h2>
+            @if (searchArticles?.length) {}
+            <div class="Instances">
+                @for (article of searchArticles; track $index) {
+                <app-article-card [article]="article"></app-article-card>
+                }
+            </div>
+            }
+            }
+            }
         </mat-card-content>
     </mat-card>
 </div>
