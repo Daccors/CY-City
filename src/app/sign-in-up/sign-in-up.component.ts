@@ -70,14 +70,13 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
 export class SignInUpComponent {
   switchSignInSignUp: boolean = false;
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', Validators.required);
-
   matcher = new MyErrorStateMatcher();
   matcherpsw = new MyErrorStateMatcher();
 
 
   postSignUp : boolean = false;
+  postLogin : boolean = false;
+
   register = new FormGroup({
     username: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -88,13 +87,12 @@ export class SignInUpComponent {
     acceptConditions: new FormControl(false, Validators.requiredTrue)
   }, { validators: passwordMatchValidator });
 
-  //Connexion
-  LoginObjt: any = {
-    mail: '',
-    password: ''
-  };
+  login = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    rememberMe: new FormControl(false, []),
+  });
 
-  rememberMe: boolean = false;
 
   constructor() {
     this.register.get('password')?.valueChanges.subscribe(() => {
@@ -102,19 +100,17 @@ export class SignInUpComponent {
     });
   }
 
-  checkChanged(event: MatCheckboxChange): void {
-    this.rememberMe = event.checked;
-  }
   authService = inject(AuthService);
   router = inject(Router);
 
   onLogin(): void {
     // Vérifier la validité des contrôles avant de tenter la connexion
-    if (this.emailFormControl.invalid || this.passwordFormControl.invalid) {
+    this.postLogin = true;
+    if (this.login?.invalid) {
       return;
     }
 
-    this.authService.login(this.LoginObjt.mail, this.LoginObjt.password, this.rememberMe)
+    this.authService.login(this.login.get('email').value, this.login.get('password').value, this.login.get('rememberMe').value)
       .subscribe({
         next: () => {
           // Rediriger après connexion réussie

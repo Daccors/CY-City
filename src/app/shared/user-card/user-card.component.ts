@@ -26,7 +26,7 @@ export class UserCardComponent {
   @Input() user: users;
   @Input() level: level
 
-  profilePage: string = '';
+  profilePage: string = '/profile_page/';
   profilePic: string = '';
 
   constructor() { }
@@ -35,8 +35,7 @@ export class UserCardComponent {
     if(this.user.photo == null){
       this.profilePic = '../../../../public/placeholder.png';
     }
+    this.profilePage = this.profilePage+this.user.id;
+
   }
-
-  // Chercher la configuration correspondante dans le JSON
-
 }

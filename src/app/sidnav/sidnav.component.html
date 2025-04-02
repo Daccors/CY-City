@@ -2,7 +2,7 @@
     @if(isMobile){
     <div class="top">
         @if(userRole != null){
-        <button mat-raised-button routerLink="my-account" routerLinkActive="active"
+        <button mat-raised-button (routerLink)="profilepage" routerLinkActive="active"
             (click)="onButtonClicked()"><mat-icon>account_circle</mat-icon> Mon compte </button>
         }
         @else {

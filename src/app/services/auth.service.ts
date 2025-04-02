@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
@@ -9,6 +9,8 @@ import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api/allTables/users'
   private token: string | null = null;
+  private userID: string;
+  private userRole: string;
   private userRoleSubject = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
@@ -23,13 +25,14 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string, rememberMe: boolean): any /*Observable<{ token: string } | null>*/ {
+  login(email: string, password: string, rememberMe: boolean): any  {
     return this.http.post<any>("http://localhost:8000/api/login", { email, password }).pipe(
       tap(response => {
         if (response) {
           this.token = response.token;
-          console.log(this.token);
-          if (rememberMe) { // Si rememberMe est true, on stocke le token
+          this.userID = response.user_id;
+          localStorage.setItem('user_id', this.userID);
+          if (rememberMe) {
             localStorage.setItem('token', response.token);
           }
         }
@@ -42,20 +45,12 @@ export class AuthService {
     return this.token || localStorage.getItem('token');
   }
 
-  private testlogin(email: string, password: string): Observable<{ token: string } | null> {
-    if (email === 'root@root' && password === 'root') {
-      return of({ token: 'A' }); // Retourne un Observable avec un objet contenant un token
-    }
-    return of(null); // Retourne un Observable avec null
-  }
-
   getUserRole(): string | null {
-    const token = this.getToken(); // Récupère le token depuis localStorage
+    const token = this.getToken(); 
     if (!token) {
       return null;
     }
 
-    // Simuler des rôles en fonction du token (normalement, on décode un JWT)
     if (token === 'A') return 'admin';
     if (token === 'B') return 'moderator';
     if (token === 'C') return 'user';

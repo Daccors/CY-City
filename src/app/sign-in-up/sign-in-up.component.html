@@ -3,31 +3,39 @@
         <div class="backContainer">
             <div class="signUp">
                 <h3> Connexion </h3>
-                <mat-form-field>
-                    <mat-label> Adresse Mail </mat-label>
-                    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-                        placeholder="Ex. pat@example.com" [(ngModel)]="LoginObjt.mail">
-                    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                    <mat-error>Veuillez entrer une adresse e-mail valide.</mat-error>
-                    }
-                    @if (emailFormControl.hasError('required')) {
-                    <mat-error>L'adresse e-mail est <strong>obligatoire</strong></mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label> Mot de passe </mat-label>
-                    <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
-                        [(ngModel)]="LoginObjt.password">
-                    @if (passwordFormControl.hasError('required')) {
-                    <mat-error> Le mot de passe est obligatoire </mat-error>
-                    }
-                </mat-form-field>
-                <div>
-                    <mat-checkbox (change)="checkChanged($event)"> Se souvenir de moi </mat-checkbox>
-                </div>
-                <div class="button">
-                    <button mat-flat-button (click)="onLogin()"> Se connecter </button>
-                </div>
+                <form [formGroup]="login" class="signUp">
+                    <mat-form-field>
+                        <mat-label> Adresse Mail </mat-label>
+                        <input type="email" matInput [errorStateMatcher]="matcher"
+                            placeholder="Ex. pat@example.com" formControlName="email">
+                        @if (login.get('email').hasError('email') && !login.get('email').hasError('required')) {
+                        <mat-error>Veuillez entrer une adresse e-mail valide.</mat-error>
+                        }
+                        @if (login.get('email').hasError('required')) {
+                        <mat-error>L'adresse e-mail est <strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label> Mot de passe </mat-label>
+                        <input type="password" matInput formControlName="password"
+                            [errorStateMatcher]="matcher">
+                        @if (login.get('password').hasError('required')) {
+                        <mat-error> Le mot de passe est obligatoire </mat-error>
+                        }
+                    </mat-form-field>
+                    <div>
+                        <mat-checkbox matInput formControlName="rememberMe"> Se souvenir de moi </mat-checkbox>
+                    </div>
+                    <div class="button">
+                        <button mat-flat-button (click)="onLogin()" [disabled]="!login.valid||postLogin">    
+                            @if (postLogin) {
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                            }
+                            @else{
+                            Se connecter
+                            }</button>
+                    </div>
+                </form>
                 <a routerLink="/" routerLinkActive="active">Mot de passe oublié ?</a>
             </div>
             <div class="signIn">
