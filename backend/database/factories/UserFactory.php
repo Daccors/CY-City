@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),
             'gender' => fake()->randomElement(['H', 'F', 'O']),
-            'status' => fake()->randomElement(['active', 'pending']),
+            'status' => fake()->randomElement(['active', 'inactive']),
             'birthdate' => fake()->date('d-m-Y', '-18 years'),
             'level_id' => \App\Models\Level::factory(),
             'address_id' => \App\Models\Address::factory(),

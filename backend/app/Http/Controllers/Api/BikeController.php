@@ -15,7 +15,7 @@ class BikeController extends Controller{
             'localisations_id' => 'required|exists:localisations,id',
             'brand' => 'required|string',
             'type' => 'required|string',
-            'availability' => 'required|string'
+            'availability' => 'required|numeric'
         ]);
 
         $bike = Bike::create($fields);
@@ -35,7 +35,7 @@ class BikeController extends Controller{
             'localisations_id' => 'sometimes|exists:localisations,id',
             'brand' => 'sometimes|string',
             'type' => 'sometimes|string',
-            'availability' => 'sometimes|string'
+            'availability' => 'sometimes|numeric'
         ]);
 
         $bike->update($fields);

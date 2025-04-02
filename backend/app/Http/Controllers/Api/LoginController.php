@@ -13,6 +13,9 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials)){
             $user = Auth::user();
+            if($user->status !== 'active'){
+                Auth::logout();
+            }
             //$token = $user->createToken('NomDuToken')->plainTextToken;
             return response()->json(['token' => 'A'], 200);
         }

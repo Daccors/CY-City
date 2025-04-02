@@ -45,8 +45,8 @@ class DeliveringDroneController extends Controller
             'stat' => 'sometimes|string',
             'batterie' => 'sometimes|numeric',
             'capacity' => 'sometimes|numeric',
-            'departure' => 'sometimes|date',
-            'estimated_arrival_time' => 'sometimes|date'
+            'departure' => 'sometimes',
+            'estimated_arrival_time' => 'sometimes'
         ]);
 
         $drone->update($fields);

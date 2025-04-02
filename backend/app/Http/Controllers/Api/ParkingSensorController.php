@@ -16,7 +16,7 @@ class ParkingSensorController extends Controller
     {
         $fields = $request->validate([
             'localisations_id' => 'required|exists:localisations,id',
-            'availability' => 'required|string'
+            'availability' => 'required|numeric'
         ]);
 
         $parkingSensor = ParkingSensor::create($fields);
@@ -36,7 +36,7 @@ class ParkingSensorController extends Controller
     {
         $fields = $request->validate([
             'localisations_id' => 'sometimes|exists:localisations,id',
-            'availability' => 'sometimes|string'
+            'availability' => 'sometimes|numeric'
         ]);
 
         $parkingSensor->update($fields);

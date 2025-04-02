@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Level;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use App\Mail\Welcomemail;
+use Illuminate\Mail\Message;
 
 class UserController extends Controller
 {
@@ -20,7 +26,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try{$fields = $request->validate([
-            'username' => 'required',
+            'username' => 'required|unique:users,username',
             'surname' => 'required',
             'photo' => 'nullable',
             'name' => 'required',
@@ -41,10 +47,20 @@ class UserController extends Controller
         ]);
         $fields['level_id'] = $defaultLevel->id;
         $fields['password'] = Hash::make($fields['password']);
+        $fields['status'] = 'inactive';
 
         $user = User::create($fields);
 
-        return response()->json(['true'], 201);
+        $token = Str::random(64);
+        DB::table('email_verification_tokens')->insert([
+            'user_id' => $user->id,
+            'token' => $token,
+            'created_at' => now()
+        ]);
+
+        Mail::to($user->email)->send(new Welcomemail($user, $token));
+
+        return response()->json('true');
     }
 
     public function show(User $user){
@@ -79,6 +95,23 @@ class UserController extends Controller
 
     public function destroy(User $user){
         return ['message' => 'Utilisateur supprimé'];
+    }
+
+    public function verifyEmail($token)
+    {
+        $verificationData = DB::table('email_verification_tokens')->where('token', $token)->first();
+    
+        if (!$verificationData) {
+            return response()->json(['message' => 'Token invalide'], 400);
+        }
+    
+        $user = User::find($verificationData->user_id);
+        $user->status = 'active';
+        $user->save();
+    
+        DB::table('email_verification_tokens')->where('token', $token)->delete();
+    
+        return redirect()->to('/login')->with('message', 'Votre compte a été activé avec succès!');
     }
 
 }

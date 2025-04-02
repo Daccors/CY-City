@@ -109,3 +109,5 @@ Route::prefix('allTables')->group(function (){
 });
 
 Route::apiResource('data', TableMetaDataController::class);
+
+Route::get('verify-email/{token}', [UserController::class, 'verifyEmail']);

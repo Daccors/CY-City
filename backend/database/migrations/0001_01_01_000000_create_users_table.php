@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('gender', ['H', 'F', 'O'])->nullable();
-            $table->enum('status',['active', 'pending'])->nullable();
+            $table->enum('status',['active', 'pending', 'inactive'])->default('inactive');
             $table->date('birthdate')->nullable();
             $table->foreignId('level_id')->on('levels')->onDelete('cascade');
             $table->foreignId('address_id')->on('addresses')->onDelete('cascade')->nullable();
