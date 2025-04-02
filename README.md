@@ -1,5 +1,5 @@
 # CY-City
-![La Ville de Cergy](public\laVille.png)
+![`La Ville de Cergy`](public\laVille.png)
 
 ## Installation des frameworks et API
 ### Angular CLI
@@ -39,6 +39,8 @@ En ayant **node.js** et **python** faire `pip install apache-superset`
 > ng serve
 > ```
 
+***
+***
 
 ## Arreter les services
 Vous devrez faire `Ctrl + C` dans le terminal où vous avez lancé vos services.
