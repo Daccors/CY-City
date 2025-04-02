@@ -12,7 +12,7 @@ class DeliveringDroneController extends Controller
         try{
             return response()->json([
                 1,
-                DeliveringDrone::all()
+                DeliveringDonre::all()
                 ]);
             }
             catch(Exception $e){

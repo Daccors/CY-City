@@ -24,7 +24,6 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->foreignId('level_id')->on('levels')->onDelete('cascade');
             $table->foreignId('address_id')->on('addresses')->onDelete('cascade')->nullable();
-            $table->json('pins')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
