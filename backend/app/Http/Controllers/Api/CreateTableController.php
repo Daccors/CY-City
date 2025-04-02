@@ -8,51 +8,49 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Exception;
 
 class CreateTableController extends Controller
 {
     public function createTable(Request $request){
-    $request->validate([
-        'table_name' => 'required|string',
-        'columns' => 'required|array',
-    ]);
+        try {
+            $request->validate([
+                'table_name' => 'required|string',
+                'columns' => 'required|array',
+            ]);
 
-    $tableName = $request->table_name;
-    $columns = $request->columns;
+            $tableName = $request->table_name;
+            $columns = $request->columns;
 
-    if (Schema::hasTable($tableName)){
-        return response()->json(['message' => 'Table already exists'], 400);
-    }
+            Schema::create($tableName, function (Blueprint $table) use ($columns){
+                $table->id();
+                foreach ($columns as $column){
+                    $type = $column['type'] ?? 'string';
+                    $name = $column['name'];
 
-    Schema::create($tableName, function (Blueprint $table) use ($columns){
-        $table->id();
-        foreach ($columns as $column){
-            $type = $column['type'] ?? 'string';
-            $name = $column['name'];
+                    if ($type === 'string') {
+                        $table->string($name);
+                    } 
+                    elseif ($type === 'integer'){
+                        $table->integer($name);
+                    } 
+                    elseif ($type === 'boolean'){
+                        $table->boolean($name);
+                    } 
+                    elseif ($type === 'text'){
+                        $table->text($name);
+                    }
+                }
+                $table->timestamps();
+            });
 
-            if ($type === 'string') {
-                $table->string($name);
-            } 
-            elseif ($type === 'integer'){
-                $table->integer($name);
-            } 
-            elseif ($type === 'boolean'){
-                $table->boolean($name);
-            } 
-            elseif ($type === 'text'){
-                $table->text($name);
-            }
-        }
-        $table->timestamps();
-    });
+            Artisan::call("make:model " . ucfirst($tableName));
 
-    Artisan::call("make:model " . ucfirst($tableName));
+            $modelPath = app_path("Models/" . ucfirst($tableName) . ".php");
+            $fillableFields = array_map(fn($col) => "'{$col['name']}'", $columns);
+            $fillableString = implode(', ', $fillableFields);
 
-    $modelPath = app_path("Models/" . ucfirst($tableName) . ".php");
-    $fillableFields = array_map(fn($col) => "'{$col['name']}'", $columns);
-    $fillableString = implode(', ', $fillableFields);
-
-    $modelContent = <<<PHP
+            $modelContent = <<<PHP
 <?php
 
 namespace App\Models;
@@ -68,10 +66,18 @@ class {$tableName} extends Model
 }
 PHP;
 
-    File::put($modelPath, $modelContent);
+            File::put($modelPath, $modelContent);
 
-    Artisan::call("make:controller Api/" . ucfirst($tableName) . "Controller --api --model=" . ucfirst($tableName));
+            Artisan::call("make:controller Api/" . ucfirst($tableName) . "Controller --api --model=" . ucfirst($tableName));
 
-    return response()->json(['message' => "Table $tableName, Model et Controller créés avec succès"]);
+            return response()->json(1);
+            
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (Exception $e) {
+            return response()->json(0);
+        }
     }
 }

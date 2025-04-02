@@ -8,51 +8,82 @@ use App\Models\Article;
 class ArticleController extends Controller
 {
     public function index(){
-        return Article::all();
+        try{
+            return response()->json([
+                1,
+                Article::all()
+                ]);
+            }
+            catch(Exception $e){
+                return response()->json(0);
+            }
     }
 
     public function store(Request $request){
-        $fields = $request->validate([
-            'title' => 'required|string',
-            'photo' => 'nullable|string',
-            'author' => 'required|string',
-            'description' => 'required|string',
-            'content' => 'required|string',
-            'keyword' => 'nullable|string'
-        ]);
-
-        $article = Article::create($fields);
-
-        return response()->json([
-            $article,
-            'message' => 'Article created successfully'
-        ], 201);
+        try{
+            $fields = $request->validate([
+                'title' => 'required|string',
+                'photo' => 'nullable|string',
+                'author' => 'required|string',
+                'description' => 'required|string',
+                'content' => 'required|string',
+                'keyword' => 'nullable|string'
+            ]);
+    
+            $article = Article::create($fields);
+    
+            return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function show(Article $article){
-        return $article;
+        try{
+            return response()->json([
+                1,
+                $article
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function update(Request $request, Article $article){
-        $fields = $request->validate([
-            'title' => 'sometimes|string',
-            'photo' => 'nullable|string',
-            'author' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'content' => 'sometimes|string',
-            'keyword' => 'sometimes|string'
-        ]);
-
-        $article->update($fields);
-
-        return response()->json([
-            'article' => $article,
-            'message' => 'Article updated successfully'
-        ], 200);
+        try{
+            $fields = $request->validate([
+                'title' => 'sometimes|string',
+                'photo' => 'nullable|string',
+                'author' => 'sometimes|string',
+                'description' => 'sometimes|string',
+                'content' => 'sometimes|string',
+                'keyword' => 'sometimes|string'
+            ]);
+    
+            $article->update($fields);
+    
+            return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        } 
     }
 
     public function destroy(Article $article){
-        $article->delete();
-        return ['message' => 'Article supprimé'];
+        try {
+            $article->delete();
+            return response()->json(1);
+         } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 }

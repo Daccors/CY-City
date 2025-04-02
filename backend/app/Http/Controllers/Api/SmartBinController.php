@@ -9,34 +9,58 @@ class SmartBinController extends Controller
 {
     public function index()
     {
-        return SmartBin::all();
+        try{
+            return response()->json([
+                1,
+                SmartBin::all()
+                ]);
+            }
+            catch(Exception $e){
+                return response()->json(0);
+            }
     }
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'localisations_id' => 'required|exists:localisations,id',
-            'capacity' => 'required|numeric',
-            'opened' => 'required|boolean',
-            'last_collection' => 'required|date',
-            'stat' => 'required|string'
-        ]);
-
-        $smartBin = SmartBin::create($fields);
-
-        return response()->json([
-            $smartBin,
-            'message' => 'Smart Bin created successfully'
-        ], 201);
+        try{
+            $fields = $request->validate([
+                'localisations_id' => 'required|exists:localisations,id',
+                'capacity' => 'required|numeric',
+                'opened' => 'required|boolean',
+                'last_collection' => 'required|date',
+                'stat' => 'required|string'
+            ]);
+    
+            $smartBin = SmartBin::create($fields);
+    
+            return response()->json(1);
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        } 
+        
     }
 
     public function show(SmartBin $smartBin)
     {
-        return $smartBin;
+        try{
+            return response()->json([
+                1,
+                $smartBin
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function update(Request $request, SmartBin $smartBin)
     {
+        try{
+            
         $fields = $request->validate([
             'localisations_id' => 'sometimes|exists:localisations,id',
             'capacity' => 'sometimes|numeric',
@@ -47,15 +71,24 @@ class SmartBinController extends Controller
 
         $smartBin->update($fields);
 
-        return response()->json([
-            'smartBin' => $smartBin,
-            'message' => 'Smart Bin updated successfully'
-        ], 200);
+        return response()->json(1);
+        }
+        catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function destroy(SmartBin $smartBin)
     {
-        $smartBin->delete();
-        return ['message' => 'Poubelle intelligente supprimée'];
+        try {
+            $smartBin->delete();
+            return response()->json(1);
+         } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 }

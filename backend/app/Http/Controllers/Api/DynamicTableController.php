@@ -11,75 +11,82 @@ class DynamicTableController extends Controller
 {
     public function index($table)
     {
-        if (!Schema::hasTable($table)) {
-            return response()->json(['message' => 'Table not found'], 404);
+        try{
+            $modelClass = "App\\Models\\" . ucfirst($table);
+            return response()->json([
+                1,
+                $modelClass::all()
+            ]);
         }
-
-        $modelClass = "App\\Models\\" . ucfirst($table);
-        return response()->json($modelClass::all());
+        catch(Exception $e){
+            return response()->json(0);
+        }
+        
     }
 
     public function store(Request $request, $table)
     {
-        if (!Schema::hasTable($table)) {
-            return response()->json(['message' => 'Table not found'], 404);
+        try{
+            $modelClass = "App\\Models\\" . ucfirst($table);
+            $data = $modelClass::create($request->all());
+
+            return response()->json(1);
         }
-
-        $modelClass = "App\\Models\\" . ucfirst($table);
-        $data = $modelClass::create($request->all());
-
-        return response()->json($data, 201);
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
+        }
     }
 
     public function show($table, $id)
     {
-        if (!Schema::hasTable($table)) {
-            return response()->json(['message' => 'Table not found'], 404);
-        }
-
-        $modelClass = "App\\Models\\" . ucfirst($table);
+        try{
+            $modelClass = "App\\Models\\" . ucfirst($table);
         $record = $modelClass::find($id);
 
         if (!$record){
             return response()->json(['message' => 'Record not found'], 404);
         }
 
-        return response()->json($record);
+        return response()->json([
+            1,
+            $record]);
+        }
+        catch(Exception $e){
+            return response()->json(0);
+        }
     }
 
     public function update(Request $request, $table, $id)
     {
-        if (!Schema::hasTable($table)) {
-            return response()->json(['message' => 'Table not found'], 404);
+
+        try{
+            $modelClass = "App\\Models\\" . ucfirst($table);
+            $record = $modelClass::find($id);
+            $record->update($request->all());
+
+            return response()->json([
+                1,
+                $record]);
         }
-
-        $modelClass = "App\\Models\\" . ucfirst($table);
-        $record = $modelClass::find($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
+        catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(0);
+        } 
+        catch (\Exception $e) {
+            return response()->json(0);
         }
-
-        $record->update($request->all());
-
-        return response()->json($record);
     }
 
     public function destroy($table, $id)
     {
-        if (!Schema::hasTable($table)) {
-            return response()->json(['message' => 'Table not found'], 404);
+        try{
+            $record->delete();
+            return response()->json(1);
         }
-
-        $modelClass = "App\\Models\\" . ucfirst($table);
-        $record = $modelClass::find($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
+        catch (\Exception $e) {
+            return response()->json(0);
         }
-
-        $record->delete();
-
-        return response()->json(['message' => 'Deleted successfully']);
     }
 }
