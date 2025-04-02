@@ -1,5 +1,5 @@
 # CY-City
-![`La Ville de Cergy`](public/laVille.png)
+![La Ville de Cergy](public\laVille.png)
 
 ## Installation des frameworks et API
 ### Angular CLI
@@ -14,6 +14,8 @@ Pour utiliser laravel il faudra avoir **php** d'installé.
 Vous pourrez le trouver [sur le site de php](https://www.php.net/).
 Certaines sources indique aussi qu'il vous faudra **Composer** téléchargable [`ici`](https://getcomposer.org/download/)
 
+### Superset
+En ayant **node.js** et **python** faire `pip install apache-superset`
 
 ***
 ***
@@ -25,7 +27,7 @@ Certaines sources indique aussi qu'il vous faudra **Composer** téléchargable [
 >  ```
 > Ce qui lancera tous les services nécessaires
 
-> Sans terminal bash, il faudra lancer manuellement chaques services:
+> Sans terminal bash, il faudra lancer un terminal pour chaques services:
 > <br>**Lancer Laravel**
 > ```sh
 > cd ./backend
@@ -37,8 +39,6 @@ Certaines sources indique aussi qu'il vous faudra **Composer** téléchargable [
 > ng serve
 > ```
 
-***
-***
 
 ## Arreter les services
 Vous devrez faire `Ctrl + C` dans le terminal où vous avez lancé vos services.

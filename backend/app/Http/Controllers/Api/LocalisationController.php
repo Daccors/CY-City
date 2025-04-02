@@ -9,79 +9,47 @@ class LocalisationController extends Controller
 {
     public function index()
     {
-        try{
-        return response()->json([
-            1,
-            Localisation::all()
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return Localisation::all();
     }
 
     public function store(Request $request)
     {
-        try{
-            $fields = $request->validate([
-                'latitude' => 'required|numeric',
-                'longitude' => 'required|numeric'
-            ]);
-    
-            $localisation = Localisation::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric'
+        ]);
+
+        $localisation = Localisation::create($fields);
+
+        return response()->json([
+            $localisation,
+            'message' => 'Localisation created successfully'
+        ], 201);
     }
 
     public function show(Localisation $localisation)
     {
-        try{
-            return response()->json([
-                1,
-                $user
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $localisation;
     }
 
     public function update(Request $request, Localisation $localisation)
     {
-        try{
-            $fields = $request->validate([
-                'latitude' => 'sometimes|numeric',
-                'longitude' => 'sometimes|numeric'
-            ]);
-    
-            $localisation->update($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
-        
+        $fields = $request->validate([
+            'latitude' => 'sometimes|numeric',
+            'longitude' => 'sometimes|numeric'
+        ]);
+
+        $localisation->update($fields);
+
+        return response()->json([
+            'localisation' => $localisation,
+            'message' => 'Localisation updated successfully'
+        ], 200);
     }
 
     public function destroy(Localisation $localisation)
     {
-        try {
-            $user->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $localisation->delete();
+        return ['message' => 'Localisation supprimée'];
     }
 }

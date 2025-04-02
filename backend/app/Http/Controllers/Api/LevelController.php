@@ -9,78 +9,47 @@ class LevelController extends Controller
 {
     public function index()
     {
-        try{
-            return response()->json([
-                1,
-                Level::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return Level::all();
     }
 
     public function store(Request $request)
     {
-        try{
-            $fields = $request->validate([
-                'type' => 'string',
-                'points' => 'required|integer'
-            ]);
-    
-            $level = Level::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'type' => 'string',
+            'points' => 'required|integer'
+        ]);
+
+        $level = Level::create($fields);
+
+        return response()->json([
+            $level,
+            'message' => 'Level created successfully'
+        ], 201);
     }
 
     public function show(Level $level)
     {
-        try{
-            return response()->json([
-                1,
-                $level
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $level;
     }
 
     public function update(Request $request, Level $level)
     {
-        try{
-            $fields = $request->validate([
-                'type' => 'sometimes|string',
-                'points' => 'required|integer'
-            ]);
-    
-            $level->update($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'type' => 'sometimes|string',
+            'points' => 'required|integer'
+        ]);
+
+        $level->update($fields);
+
+        return response()->json([
+            'level' => $level,
+            'message' => 'Level updated successfully'
+        ], 200);
     }
 
     public function destroy(Level $level)
     {
-        try {
-            $level->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $level->delete();
+        return ['message' => 'Niveau supprimé'];
     }
 }

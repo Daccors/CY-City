@@ -9,77 +9,47 @@ class HavingController extends Controller
 {
     public function index()
     {
-        try{
-            return response()->json([
-                1,
-                Having::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return Having::all();
     }
 
     public function store(Request $request)
     {
-        try{
-            $fields = $request->validate([
-                'users_id' => 'required|exists:users,id',
-                'connection_id' => 'required|exists:connections,id'
-            ]);
-    
-            $having = Having::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'users_id' => 'required|exists:users,id',
+            'connection_id' => 'required|exists:connections,id'
+        ]);
+
+        $having = Having::create($fields);
+
+        return response()->json([
+            $having,
+            'message' => 'Having record created successfully'
+        ], 201);
     }
 
     public function show(Having $having)
     {
-        try{
-            return response()->json([
-                1,
-                $having
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $having;
     }
 
     public function update(Request $request, Having $having)
     {
-        try{
-            $fields = $request->validate([
-                'users_id' => 'required|exists:users,id',
-                'connection_id' => 'required|exists:connections,id'
-            ]);
-    
-            $having->update($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'users_id' => 'required|exists:users,id',
+            'connection_id' => 'required|exists:connections,id'
+        ]);
+
+        $having->update($fields);
+
+        return response()->json([
+            'having' => $having,
+            'message' => 'Having record updated successfully'
+        ], 200);
     }
 
-    public function destroy(Having $having){
-        try {
-            $having->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+    public function destroy(Having $having)
+    {
+        $having->delete();
+        return ['message' => 'Enregistrement Having supprimé'];
     }
 }

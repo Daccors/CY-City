@@ -9,58 +9,45 @@ class ConnectionController extends Controller
 {
     public function index()
     {
-        try{
-            return response()->json([
-                1,
-                Connection::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return Connection::all();
     }
 
     public function store(Request $request)
     {
-        try{
-            $fields = $request->validate([
-                'user_id' => 'required|exists:users,id'
-            ]);
-    
-            $connection = Connection::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
-        
+        $fields = $request->validate([
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $connection = Connection::create($fields);
+
+        return response()->json([
+            $connection,
+            'message' => 'Connection created successfully'
+        ], 201);
     }
 
     public function show(Connection $connection)
     {
-        try{
-            return response()->json([
-                1,
-                $connection
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $connection;
+    }
+
+    public function update(Request $request, Connection $connection)
+    {
+        $fields = $request->validate([
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $connection->update($fields);
+
+        return response()->json([
+            'connection' => $connection,
+            'message' => 'Connection updated successfully'
+        ], 200);
     }
 
     public function destroy(Connection $connection)
     {
-        try {
-            $connection->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $connection->delete();
+        return ['message' => 'Connexion supprimée'];
     }
 }

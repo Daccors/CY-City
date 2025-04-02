@@ -9,79 +9,47 @@ class ParkingSensorController extends Controller
 {
     public function index()
     {
-        try{
-            return response()->json([
-                1,
-                ParkingSensor::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return ParkingSensor::all();
     }
 
     public function store(Request $request)
     {
-        try{
-            $fields = $request->validate([
-                'localisations_id' => 'required|exists:localisations,id',
-                'availability' => 'required|string'
-            ]);
-    
-            $parkingSensor = ParkingSensor::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $fields = $request->validate([
+            'localisations_id' => 'required|exists:localisations,id',
+            'availability' => 'required|string'
+        ]);
+
+        $parkingSensor = ParkingSensor::create($fields);
+
+        return response()->json([
+            $parkingSensor,
+            'message' => 'Parking Sensor created successfully'
+        ], 201);
     }
 
     public function show(ParkingSensor $parkingSensor)
     {
-        try{
-            return response()->json([
-                1,
-                $parkingSensor
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $parkingSensor;
     }
 
     public function update(Request $request, ParkingSensor $parkingSensor)
     {
-        try{
-            
         $fields = $request->validate([
             'localisations_id' => 'sometimes|exists:localisations,id',
             'availability' => 'sometimes|string'
         ]);
 
         $parkingSensor->update($fields);
-        
-        return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+
+        return response()->json([
+            'parkingSensor' => $parkingSensor,
+            'message' => 'Parking Sensor updated successfully'
+        ], 200);
     }
 
     public function destroy(ParkingSensor $parkingSensor)
     {
-        try {
-            $parkingSensor->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $parkingSensor->delete();
+        return ['message' => 'Capteur de stationnement supprimé'];
     }
 }

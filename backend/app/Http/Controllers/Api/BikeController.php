@@ -7,80 +7,47 @@ use App\Models\Bike;
 
 class BikeController extends Controller{
     public function index(){
-        try{
-            return response()->json([
-                1,
-                Bike::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return Bike::all();
     }
 
     public function store(Request $request){
-        try{
-            $fields = $request->validate([
-                'localisations_id' => 'required|exists:localisations,id',
-                'brand' => 'required|string',
-                'type' => 'required|string',
-                'availability' => 'required|string'
-            ]);
-    
-            $bike = Bike::create($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
-        
+        $fields = $request->validate([
+            'localisations_id' => 'required|exists:localisations,id',
+            'brand' => 'required|string',
+            'type' => 'required|string',
+            'availability' => 'required|string'
+        ]);
+
+        $bike = Bike::create($fields);
+
+        return response()->json([
+            $bike,
+            'message' => 'Bike created successfully'
+        ], 201);
     }
 
     public function show(Bike $bike){
-        try{
-            return response()->json([
-                1,
-                $bike
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $bike;
     }
 
     public function update(Request $request, Bike $bike){
-        try{
-            $fields = $request->validate([
-                'localisations_id' => 'sometimes|exists:localisations,id',
-                'brand' => 'sometimes|string',
-                'type' => 'sometimes|string',
-                'availability' => 'sometimes|string'
-            ]);
-    
-            $bike->update($fields);
-    
-            return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
-        
+        $fields = $request->validate([
+            'localisations_id' => 'sometimes|exists:localisations,id',
+            'brand' => 'sometimes|string',
+            'type' => 'sometimes|string',
+            'availability' => 'sometimes|string'
+        ]);
+
+        $bike->update($fields);
+
+        return response()->json([
+            'bike' => $bike,
+            'message' => 'Bike updated successfully'
+        ], 200);
     }
 
     public function destroy(Bike $bike){
-        try {
-            $bike->delete();
-            return response()->json(1);
-         } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        $bike->delete();
+        return ['message' => 'Vélo supprimé'];
     }
 }

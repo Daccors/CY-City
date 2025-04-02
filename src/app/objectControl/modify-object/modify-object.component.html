@@ -1,6 +1,10 @@
 <mat-card>
     <mat-card-content>
-        <p> parameter : {{ type }} </p>
-        <p> ID : {{ id }} </p>
+        <h3 class="title"> {{ type }} ID:{{id}} </h3>
+        <div clas="informations">
+            @for (key of objectKey; track $index) {
+                <p> {{ key }} : {{ object[key] }} </p>
+            }
+        </div>
     </mat-card-content>
 </mat-card>

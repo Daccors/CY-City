@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injectable, Input, Output, ValueProvider } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Importez vos métadonnées
 import { metadata2 } from '../../shared/InstancesInterfaces';

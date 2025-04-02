@@ -30,53 +30,75 @@
                 </div>
                 <a routerLink="/" routerLinkActive="active">Mot de passe oublié ?</a>
             </div>
-
-
             <div class="signIn">
                 <h3> Inscription </h3>
-                <label for="fileInput" class="profile-picture">
-                    <img [src]="imageSrc" alt="Profile Picture" />
-                </label>
-                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" />
-                <mat-form-field>
-                    <mat-label> Nom d'utilisateur </mat-label>
-                    <input type="text" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
-                        [(ngModel)]="LoginObjt.password">
-                    @if (passwordFormControl.hasError('required')) {
-                    <mat-error> Le mot de passe est obligatoire </mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label> Adresse Mail </mat-label>
-                    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-                        placeholder="Ex. pat@example.com" [(ngModel)]="LoginObjt.mail">
-                    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                    <mat-error>Veuillez entrer une adresse e-mail valide.</mat-error>
-                    }
-                    @if (emailFormControl.hasError('required')) {
-                    <mat-error>L'adresse e-mail est <strong>obligatoire</strong></mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label> Mot de passe </mat-label>
-                    <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
-                        [(ngModel)]="LoginObjt.password">
-                    @if (passwordFormControl.hasError('required')) {
-                    <mat-error> Le mot de passe est obligatoire </mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label> Confirmer votre mot de passe </mat-label>
-                    <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
-                        [(ngModel)]="LoginObjt.password">
-                    @if (passwordFormControl.hasError('required')) {
-                    <mat-error> Le mot de passe est obligatoire </mat-error>
-                    }
-                </mat-form-field>
-                <div>
-                    <mat-checkbox> Accepter les conditions d'utilisation </mat-checkbox>
-                </div>
-                <button mat-stroked-button (click)="onRegister()"> S'inscrire </button>
+                <form [formGroup]="register" class="signInForm">
+                    <mat-form-field>
+                        <mat-label> Nom d'utilisateur </mat-label>
+                        <input matInput type="text" formControlName="username">
+                        <mat-error
+                            *ngIf="register.get('username').hasError('required') && register.get('username').touched">
+                            Le nom d'utilisateur est requis.
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="row">
+                        <mat-form-field>
+                            <mat-label> Nom </mat-label>
+                            <input matInput type="text" formControlName="FirstName">
+                            <mat-error
+                                *ngIf="register.get('FirstName').hasError('required') && register.get('FirstName').touched">
+                                Le nom est requis.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label> prénom </mat-label>
+                            <input matInput type="text" formControlName="LastName">
+                            <mat-error
+                                *ngIf="register.get('LastName').hasError('required') && register.get('LastName').touched">
+                                Le prénom est requis.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field>
+                        <mat-label> Adresse email</mat-label>
+                        <input matInput type="text" formControlName="email">
+                        <mat-error *ngIf="register.get('email').hasError('required') && register.get('email').touched">
+                            L'adresse email est requise.
+                        </mat-error>
+                        <mat-error *ngIf="register.get('email').hasError('email')">
+                            Entrez une adresse email valide.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label> Mot de passe </mat-label>
+                        <input matInput type="password" formControlName="password">
+                        <mat-error
+                            *ngIf="register.get('password').hasError('required') && register.get('password').touched">
+                            Un mot de passe est requis.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label> Confirmation mot de passe </mat-label>
+                        <input matInput type="password" formControlName="ConfirmPassword">
+                        <mat-error
+                            *ngIf="register.get('ConfirmPassword').hasError('required') && register.get('ConfirmPassword').touched">
+                            Veuillez confirmer le mot de passe.
+                        </mat-error>
+                        <mat-error *ngIf="register.errors?.['passwordMismatch']&& register.get('ConfirmPassword').touched">
+                            La confirmation ne correspond pas au mot de passe.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-checkbox matInput formControlName="acceptConditions"> Accepter les conditions d'utilisation
+                    </mat-checkbox>
+                    <button mat-stroked-button (click)="onRegister()" [disabled]="!register.valid||postSignUp">
+                        @if (postSignUp) {
+                            <mat-spinner></mat-spinner>
+                        }
+                        @else{
+                        S'inscrire
+                        }
+                    </button>
+                </form>
             </div>
         </div>
         <div class="frontContainer" [ngClass]="switchSignInSignUp ? 'Left' : 'Right'">

@@ -10,7 +10,9 @@
                 <mat-panel-description>
                     <div class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
-                        <input type="text" class="input-search" placeholder="Rechercher">
+                        <input #inputSearch type="text" class="input-search" placeholder="Rechercher" 
+                        (input)="onInputChange($event)"
+                        >
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>

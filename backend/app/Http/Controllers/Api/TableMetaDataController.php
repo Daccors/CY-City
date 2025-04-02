@@ -10,20 +10,10 @@ use App\Http\Controllers\Controller;
 class TableMetaDataController extends Controller
 {
     public function index(){
-        try{
-            return response()->json([
-                1,
-                TableMetaData::all()
-                ]);
-            }
-            catch(Exception $e){
-                return response()->json(0);
-            }
+        return TableMetaData::all();
     }
 
     public function store(Request $request){
-        try{
-            
         $fields = $request->validate([
             'ObjectType' => 'required|string|unique:table_meta_data,ObjectType',
             'atributs' => 'required|array',
@@ -33,32 +23,21 @@ class TableMetaDataController extends Controller
             'icon' => 'nullable|string',
         ]);
 
+        
+
         $data = TableMetaData::create($fields);
-        return response()->json(1);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+
+        return response()->json([
+            $data,
+            'message' => 'new data type created successfully'
+        ], 201);
     }
 
     public function show(TableMetaData $data){
-        try{
-            return response()->json([
-                1,
-                $data
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json(0);
-        }
+        return $data;
     }
     
     public function update(Request $request, $id) {
-        try{
-            
         $data = TableMetaData::findOrFail($id);
         
         $fields = $request->validate([
@@ -76,25 +55,14 @@ class TableMetaDataController extends Controller
             'data' => $data,
             'message' => 'Data type updated successfully'
         ]);
-        }
-        catch (\Illuminate\Validation\ValidationException $e){
-            return response()->json(0);
-        } 
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
     }
     
     public function destroy($id) {
-        try{
-            
         $data = TableMetaData::findOrFail($id);
         $data->delete();
         
-        return response()->json(1);
-        }
-        catch (\Exception $e) {
-            return response()->json(0);
-        }
+        return response()->json([
+            'message' => 'Data type deleted successfully'
+        ]);
     }
 }
