@@ -1,5 +1,5 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import { localisation, user, level } from '../../shared/InstancesInterfaces';
+import { localisation, users, level, articles } from '../../shared/InstancesInterfaces';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -7,12 +7,12 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class InformationsControlerService {
-  private apiUrl = 'http://127.0.0.1:8000/api';
-  private InformationsTypes = ['user', 'localisation', 'level'] as const;
+  private apiUrl = 'http://127.0.0.1:8000/api/allTables';
+  private InformationsTypes = ['users', 'localisation', 'level', 'articles'] as const;
   private informationsMap = new Map<
-    'user' | 'localisation' | 'level', {
-      all: WritableSignal<user[] | localisation[] | level[]>;
-      unique: WritableSignal<user | localisation | level | null>;
+    'users' | 'localisation' | 'level' | 'articles', {
+      all: WritableSignal<users[] | localisation[] | level[] | articles[]>;
+      unique: WritableSignal<users | localisation | level | articles | null>;
     }>();
 
   constructor(private http: HttpClient) {
@@ -28,55 +28,55 @@ export class InformationsControlerService {
     });
   }
 
-  registerObjectType<T extends 'user' | 'localisation' | 'level'>(type: T) {
+  registerObjectType<T extends 'users' | 'localisation' | 'level'| 'articles' >(type: T) {
     if (!this.informationsMap.has(type)) {
       this.informationsMap.set(type, {
-        all: signal<(user[] | localisation[] | level[])>([]),
-        unique: signal<(user | localisation | level | null)>(null)
+        all: signal<(users[] | localisation[] | level[] | articles[])>([]),
+        unique: signal<(users | localisation | level | articles | null)>(null)
       });
     }
   }
 
-  getObjects<T extends 'user' | 'localisation' | 'level'>(type: T): Observable<(user | localisation | level)[]> {
+  getObjects<T extends 'users' | 'localisation' | 'level' |'articles'>(type: T): Observable<(users | localisation | level | articles)[]> {
     this.registerObjectType(type);
-    return this.http.get<user[] | localisation[] | level[]>(`${this.apiUrl}/${type}`).pipe(
+    return this.http.get<users[] | localisation[] | level[] | articles[]>(`${this.apiUrl}/${type}`).pipe(
       tap((data) => {
-        this.informationsMap.get(type)!.all.set(data as user[] | localisation[] | level[]);
+        this.informationsMap.get(type)!.all.set(data as users[] | localisation[] | level[] | articles[]);
       })
     );
   }
 
 
-  getObjectById<T extends 'user' | 'localisation' | 'level'>(type: T, id: number): Observable<user|localisation|level> {
+  getObjectById<T extends 'users' | 'localisation' | 'level' | 'articles'>(type: T, id: number): Observable<users|localisation|level|articles> {
     this.registerObjectType(type);
 
-    return this.http.get<user|localisation|level>(`${this.apiUrl}/${type}/${id}`).pipe(
+    return this.http.get<users|localisation|level|articles>(`${this.apiUrl}/${type}/${id}`).pipe(
       tap((data) => {
         this.informationsMap.get(type)!.unique.set(data);
       })
     );
   }
 
-  getAllObjects<T extends 'user' | 'localisation' | 'level'>(type: T) {
-    return this.informationsMap.get(type)?.all || signal<(user[] | localisation[] | level[])>([]);
+  getAllObjects<T extends 'users' | 'localisation' | 'level' | 'articles'>(type: T) {
+    return this.informationsMap.get(type)?.all || signal<(users[] | localisation[] | level[] | articles[])>([]);
   }
 
-  getUniqueObject<T extends 'user' | 'localisation' | 'level'>(type: T) {
-    return this.informationsMap.get(type)?.unique || signal<(user | localisation | level | null)>(null);
+  getUniqueObject<T extends 'users' | 'localisation' | 'level' | 'articles'>(type: T) {
+    return this.informationsMap.get(type)?.unique || signal<(users | localisation | level | articles | null)>(null);
   }
 
-  addObject<T extends 'user' | 'localisation' | 'level'>(type: T, object: user | localisation | level): Observable<user | localisation | level> {
+  addObject<T extends 'users' | 'localisation' | 'level' | 'articles'>(type: T, object: users | localisation | level | articles): Observable<users | localisation | level | articles> {
     this.registerObjectType(type);
 
-    return this.http.post<user | localisation | level>(`${this.apiUrl}/${type}`, object).pipe(
+    return this.http.post<users | localisation | level | articles>(`${this.apiUrl}/${type}`, object).pipe(
       tap((data) => {
         const currentData = this.informationsMap.get(type)!.all();
-        this.informationsMap.get(type)!.all.set([...currentData, data] as user[] | localisation[] | level[]);
+        this.informationsMap.get(type)!.all.set([...currentData, data] as users[] | localisation[] | level[] | articles[]);
       })
     );
   }
 
-  getFirstAvailableIndex<T extends 'user' | 'localisation' | 'level'>(type: T): number {
+  getFirstAvailableIndex<T extends 'users' | 'localisation' | 'level' | 'articles'>(type: T): number {
     this.registerObjectType(type);
     const currentData = this.informationsMap.get(type)!.all();
     return currentData.length+1;
