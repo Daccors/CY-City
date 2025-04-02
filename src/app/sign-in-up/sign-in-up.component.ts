@@ -113,13 +113,11 @@ export class SignInUpComponent {
     this.authService.login(this.login.get('email').value, this.login.get('password').value, this.login.get('rememberMe').value)
       .subscribe({
         next: () => {
-          // Rediriger après connexion réussie
+          this.openSnackBar("Connexion réussie");
           this.router.navigate(['/']);
         },
         error: (err) => {
-
-
-          console.error(err);
+          this.openSnackBar("Échec de la connexion : vérifier vos identifiants.")
         }
       });
   }
