@@ -79,7 +79,7 @@ export class SearchComponent {
     this.selectedChipValue = event.value;
   }
 
-  searchObjects: Record<string, WritableSignal<any[]>>;
+  searchObjects: Record<string, WritableSignal<any[]>> = {}; // On initialise à zéro
   searchObjectsTypes: string[] = [];
   searchUsers: users[];
   searchArticles: articles[];
@@ -98,7 +98,8 @@ export class SearchComponent {
 
         Object.keys(this.searchResults).forEach(key => {
           const type = key as keyof ObjectTypes;
-          this.searchObjects[type].set(this.searchResults[key]);
+          this.searchObjects[type] = this.ObjectsList.getAllObjects(type); // remplace la ligne du dessous
+          // this.searchObjects[type].set(this.searchResults[key]); ne fonctionne pas bien ? 
         });
         this.searchObjectsTypes = Object.keys(this.searchObjects);
       },

@@ -16,76 +16,79 @@
                 </div>
             </div>
             @if (keyCount == 0 && currentSearch != '') {
-            Aucun résultat trouvé pour votre recherche.
+                Aucun résultat trouvé pour votre recherche.
             }
             @if(currentSearch == '' || currentSearch == undefined){
-            @if (selectedChipValue == 3 || selectedChipValue == undefined) {
-            <mat-divider></mat-divider>
-            @for (type of objectTypes; track $index) {
-            <h2> {{type | uppercase }} </h2>
-            <mat-divider></mat-divider>
-            <div class="Instances">
-                @for (object of allObjects[type](); track object.id) {
-                <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                @if (selectedChipValue == 3 || selectedChipValue == undefined) {
+                    <mat-divider></mat-divider>
+                    @for (type of objectTypes; track $index) {
+                        <h2> {{type | uppercase }} </h2>
+                        <mat-divider></mat-divider>
+                        <div class="Instances">
+                            @for (object of allObjects[type](); track object.id) {
+                                <app-object-card [object]="object" [objectType]="type"></app-object-card>    
+                            }
+                            <!-- @for (object of searchObjects[type](); track object.id) {
+                                <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                            } -->
+                        </div>
+                    }
                 }
-            </div>
-            }
-            }
-            @if (selectedChipValue == 2 || selectedChipValue == undefined) {
-            <mat-divider></mat-divider>
-            <h2> Utilisateurs </h2>
-            @if (allUsers()?.length && allLevels?.length) {}
-            <div class="Instances">
-                @for (user of allUsers(); track $index) {
-                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
+                @if (selectedChipValue == 2 || selectedChipValue == undefined) {
+                    <mat-divider></mat-divider>     
+                    <h2> Utilisateurs </h2>
+                    @if (allUsers()?.length && allLevels?.length) {}
+                    <div class="Instances">
+                        @for (user of allUsers(); track $index) {
+                            <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
+                        }
+                    </div>
                 }
-            </div>
-            }
-            @if(selectedChipValue == 1 || selectedChipValue == undefined){
-            <mat-divider></mat-divider>
-            <h2> Articles </h2>
-            @if (allArticles()?.length) {}
-            <div class="Instances">
-                @for (article of allArticles(); track $index) {
-                <app-article-card [article]="article"></app-article-card>
+                @if(selectedChipValue == 1 || selectedChipValue == undefined){
+                    <mat-divider></mat-divider>
+                    <h2> Articles </h2>
+                    @if (allArticles()?.length) {}
+                    <div class="Instances">
+                        @for (article of allArticles(); track $index) {
+                        <app-article-card [article]="article"></app-article-card>
+                        }
+                    </div>
                 }
-            </div>
-            }
             }
             @else {
-            @if (selectedChipValue == 3 || selectedChipValue == undefined) {
-            <!--@for (type of searchObjectsTypes; track $index) {
-                        <mat-divider></mat-divider>
+                @if (selectedChipValue == 3 || selectedChipValue == undefined) {
+                    @for (type of searchObjectsTypes; track $index) {
+                                <mat-divider></mat-divider>
 
-            <h2> {{type | uppercase }} </h2>
-            <mat-divider></mat-divider>
-            <div class="Instances">
-                @for (object of searchObjects[type](); track object.id) {
-                <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                    <h2> {{type | uppercase }} </h2>
+                    <mat-divider></mat-divider>
+                    <div class="Instances">
+                        @for (object of searchObjects[type](); track object.id) {
+                            <app-object-card [object]="object" [objectType]="type"></app-object-card>
+                        }
+                    </div>
+                    }
+                    @if(selectedChipValue == 2 || selectedChipValue == undefined){
+                        <mat-divider></mat-divider>
+                        <h2> Utilisateurs </h2>
+                        @if (searchUsers?.length && allLevels?.length) {}
+                        <div class="Instances">
+                            @for (user of searchUsers; track $index) {
+                                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
+                            }
+                        </div>
+                    }
+                    @if(selectedChipValue == 1 || selectedChipValue == undefined){
+                        <mat-divider></mat-divider>
+                        <h2> Articles </h2>
+                        @if (searchArticles?.length) {}
+                        <div class="Instances">
+                            @for (article of searchArticles; track $index) {
+                                <app-article-card [article]="article"></app-article-card>
+                            }
+                        </div>
+                    }
                 }
-            </div>
-        }-->
-            @if(selectedChipValue == 2 || selectedChipValue == undefined){
-            <mat-divider></mat-divider>
-            <h2> Utilisateurs </h2>
-            @if (searchUsers?.length && allLevels?.length) {}
-            <div class="Instances">
-                @for (user of searchUsers; track $index) {
-                <app-user-card [user]="user" [level]="allLevels()[$index]"></app-user-card>
-                }
-            </div>
-            }
-            @if(selectedChipValue == 1 || selectedChipValue == undefined){
-            <mat-divider></mat-divider>
-            <h2> Articles </h2>
-            @if (searchArticles?.length) {}
-            <div class="Instances">
-                @for (article of searchArticles; track $index) {
-                <app-article-card [article]="article"></app-article-card>
-                }
-            </div>
-            }
-            }
             }
         </mat-card-content>
     </mat-card>
