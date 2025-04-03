@@ -86,6 +86,7 @@ export class SearchComponent {
 
   onSearchChange(value: string) {
     this.currentSearch = value;
+
     this.SearchList.getObjects(value).subscribe({
       next: (data) => {
         this.searchResults = data;
@@ -95,13 +96,29 @@ export class SearchComponent {
         
         delete this.searchResults['users'];
         delete this.searchResults['articles'];
+        
+        this.searchObjectsTypes = [];
+        this.searchObjects = {};
+        for (var i in this.searchObjectsTypes){
+            console.log("testttt" + i);
+        }
 
         Object.keys(this.searchResults).forEach(key => {
           const type = key as keyof ObjectTypes;
           this.searchObjects[type] = this.ObjectsList.getAllObjects(type); // remplace la ligne du dessous
-          // this.searchObjects[type].set(this.searchResults[key]); ne fonctionne pas bien ? 
+          this.searchObjects[type].set(this.searchResults[key]); // ne fonctionne pas bien ? 
+          console.log("aaaa" + key );
+          
         });
-        this.searchObjectsTypes = Object.keys(this.searchObjects);
+          for (var i in Object.keys(this.searchObjects)){
+            console.log("avant" + i);
+          }
+   
+         this.searchObjectsTypes = Object.keys(this.searchObjects);
+         for (var i in this.searchObjectsTypes){
+             console.log("après" + i);
+         }
+      
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des résultats :', error);
